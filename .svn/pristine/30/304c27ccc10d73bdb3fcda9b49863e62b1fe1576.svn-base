@@ -1,0 +1,51 @@
+package com.mtr.psn.model.goods;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.mtr.psn.model.BaseModel;
+
+public class QueryRegistrationForm extends BaseModel  implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String orderForm;
+	private String orderTo;
+	private Integer riderID;
+	private String riderName;
+	 
+
+	public String getOrderForm() {
+		return orderForm;
+	}
+
+	public void setOrderForm(String OrderForm) {
+		this.orderForm = OrderForm;
+	}
+
+	public String getOrderTo() {
+		return orderTo;
+	}
+
+	public void setOrderTo(String orderTo) {
+		this.orderTo = orderTo;
+	}
+
+	public Integer getRiderID() {
+		return riderID;
+	}
+
+	public void setRiderID(Integer riderID) {
+		this.riderID = riderID;
+	}
+
+	 
+
+	public String getRiderName() {
+		return riderName;
+	}
+
+	public void setRiderName(String riderName ){
+		this.riderName = riderName;
+	}
+
+}

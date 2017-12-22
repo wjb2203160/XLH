@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+    <beans xmlns="http://www.springframework.org/schema/beans"  
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+            xmlns:aop="http://www.springframework.org/schema/aop"  
+            xmlns:p="http://www.springframework.org/schema/p"  
+            xmlns:tx="http://www.springframework.org/schema/tx"  
+            xmlns:context="http://www.springframework.org/schema/context"  
+            xsi:schemaLocation="   
+                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd   
+                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd   
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">  
+	
+		<!-- properties文件读取配置，base的properties -->
+		<context:property-placeholder location="classpath:jdbc.properties"/>
+		
+		<!-- JNDI获取数据源(使用dbcp连接池) -->
+		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" scope="singleton">
+			<property name="driverClassName" value="${driverClassName}" />
+			<property name="url" value="${url}" />
+			<property name="username" value="${uname}" />
+			<property name="password" value="${password}"/>
+			<property name="initialSize" value="${initialSize}"/>
+			<property name="maxActive" value="${maxActive}"/>
+			<property name="maxIdle" value="${maxIdle}"/>
+			<property name="minIdle" value="${minIdle}"/>
+			<property name="maxWait" value="${maxWait}"/>
+			
+			<property name="removeAbandoned" value="${removeAbandoned}"/>
+			<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}"/>
+			
+			<property name="testWhileIdle" value="true"/>
+			<property name="timeBetweenEvictionRunsMillis" value="60000"/>
+			<property name="testOnBorrow" value="false"/>
+			<property name="testOnReturn" value="false"/>
+			<property name="validationQuery" value="select 1"/>
+			<property name="numTestsPerEvictionRun" value="${maxActive}"/>
+		</bean>
+		
+		 <!--redis 配置 开始-->
+	    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+	        <property  name="maxActive"  value="90" />  
+	        <property  name="maxIdle"   value="5" />  
+	        <property  name="maxWait"  value="1000" />  
+	        <property  name="testOnBorrow"  value="true" /> 
+	    </bean>
+	    <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy" >
+	    	<constructor-arg ref="jedisPoolConfig"/>
+	    	<constructor-arg value="10.0.0.194"/>
+	    	<constructor-arg value="6379"/>
+	    </bean>
+	    <bean id="redisAPI" class="org.slsale.common.RedisAPI">
+	    	<property name="jedisPool" ref="jedisPool"/>
+	    </bean>
+    	<!-- redis 配置结束 -->
+    	
+		<!-- 事务管理 -->
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource"></property>
+		</bean>
+		
+		<!-- 配置myBatis sqlSessionFactoryBean -->
+		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource" ref="dataSource"/>
+			<property name="configLocation" value="classpath:myBatis-config.xml"/>
+		</bean>
+		
+		<!-- AOP事务处理 -->
+		<aop:aspectj-autoproxy/><!-- 告诉aop要使用自动代理模式 -->
+		<aop:config proxy-target-class="true"><!-- 是否使用代理标签类，true使用 -->
+			<aop:pointcut expression="execution(** com.mtr.psn.service..*(..))" id="transService"/><!-- 定义切面 表达式 -->
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="transService"/><!-- 使用的规则（表达式） -->
+		</aop:config>
+		<!-- txAdvice：需要定义事务管理器，进行事务管理 -->
+		<tx:advice id="txAdvice" transaction-manager="transactionManager">
+			<tx:attributes>
+				<tx:method name="psn*" propagation="REQUIRED" rollback-for="Exception"/><!-- 所有以tm开头的service方法都要进行事务处理 ,Exception下进行回滚-->
+			</tx:attributes>
+		</tx:advice>
+		
+		<!-- mapper接口（映射）所在的包名，spring会自动查找其下的mapper -->
+		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<property name="basePackage" value="com.mtr.psn.mapper"></property>
+		</bean>
+	</beans>

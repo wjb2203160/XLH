@@ -1,0 +1,518 @@
+package com.mtr.psn.controller.user;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mtr.psn.common.Constants;
+import com.mtr.psn.common.PageSupport;
+import com.mtr.psn.common.SQLTools;
+import com.mtr.psn.controller.BaseController;
+import com.mtr.psn.model.user.User;
+import com.mtr.psn.model.webEntity.UserEntity;
+import com.mtr.psn.service.user.UserService;
+@Controller
+// @RequestMapping(value="/user")//只要是这个处理器处理的都要加上user:如果报错则考虑是否加上“ /”
+public class UserController extends BaseController {
+
+	@Resource
+	private UserService userService;
+
+	/**
+	 * 进入填写用户信息页面
+	 * @param user
+	 * @param maintenancePlanEntity
+	 * @param accendantId
+	 * @param colorId
+	 * @return
+	 */
+	@RequestMapping(value = "/addUser.html",method=RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+	@ResponseBody
+	public ModelAndView addUser(
+			@ModelAttribute("user") UserEntity user,
+			@RequestParam(value = "type", required = false) String type) {
+
+		JSONObject userObject = JSONObject.fromObject(user);
+		UserEntity mPlanEntity = (UserEntity) userObject.toBean(userObject, UserEntity.class);
+
+		ModelAndView model = new ModelAndView();
+		return model;
+	}
+
+	/**
+	 * 保存订单和用户信息
+	 * @param _user
+	 * @param entity
+	 * @return
+	 */
+	@RequestMapping(value = "/frontend/addUserAndOrders.html", produces = { "text/html;charset=UTF-8" })
+	@ResponseBody
+	public Object orders(@RequestParam(value = "userObj", required = false) String userObj) {
+		// JOptionPane.showMessageDialog(null, request.getParameter("userName"));
+
+		logger.debug("===================订单来了"+userObj);
+		JSONObject userObject = JSONObject.fromObject(userObj);
+		UserEntity _user = (UserEntity) userObject.toBean(userObject, UserEntity.class);
+
+		if ( _user.getCellphone() != null) {
+			try {
+				/*
+				 * 如果该电话号码已经注册，则检查地址和名字是否改变 如果没有注册，则保存信息 如果电话信息有误，则订单无效
+				 */
+				User selectUser = userService.selectByPhone(_user.getCellphone());
+				boolean flag = false;
+				if (selectUser != null) {
+					if (selectUser.getUserName() == null || !selectUser.getUserName().equals(_user.getUserName())) {
+						selectUser.setUserName(_user.getUserName());
+						flag = true;
+					}
+					if (selectUser.getProvince() == null || !selectUser.getProvince().equals(_user.getProvince())) {
+						selectUser.setProvince(_user.getProvince());
+						flag = true;
+					}
+					if (selectUser.getCity() == null || !selectUser.getCity().equals(_user.getCity())) {
+						selectUser.setCity(_user.getCity());
+						flag = true;
+					}
+					if (selectUser.getCounty() == null || !selectUser.getCounty().equals(_user.getCounty())) {
+						selectUser.setCounty(_user.getCounty());
+						flag = true;
+					}
+					if (selectUser.getAddress() == null || !selectUser.getAddress().equals(_user.getAddress())) {
+						selectUser.setAddress(_user.getAddress());
+						flag = true;
+					}
+					if (flag)
+						userService.psn_update(selectUser);
+				} else {
+					User user = new User();
+					user.setCellphone(_user.getCellphone());
+					user.setUserName(_user.getUserName());
+					user.setProvince(_user.getProvince());
+					user.setCity(_user.getCity());
+					user.setCounty(_user.getCounty());
+					user.setAddress(_user.getAddress());
+					user.setCreateTime(new Date());
+					user.setModifyTime(new Date());
+					/*user.setRoleId(PlatforConstants.USER_ROLE_CLIENT);
+					user.setIsStart(PlatforConstants.USER_STATE_IS_START);
+					user.setIsRegistered(PlatforConstants.USER_STATE_UN_REGISTERED);*/
+					int i = userService.psn_insert(user);
+					if(i <=0)
+						return "user_error";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "user_error";
+			}
+			
+		} else {
+			return "user_or_code_null";
+		} // end code/phone != null
+		
+		return "success";
+	}
+
+	/**
+	 * 获取手机验证码
+	 * @param clientPhone
+	 * @return
+	 */
+	@RequestMapping(value="/frontend/getCode.html")
+	@ResponseBody
+	public String getCode(@RequestParam(value="clientPhone",required=false) String clientPhone){
+		String flag = "failed";
+		
+		return flag;
+	}
+	
+	/**
+	 * 忘记密码短信验证
+	 * @param rp_phone
+	 * @param rp_code
+	 * @return
+	 */
+	@RequestMapping(value="/frontend/uptatePwd.html")
+	@ResponseBody
+	public String uptatePwd(@RequestParam(value = "rp_phone", required = false) String rp_phone,
+			@RequestParam(value = "rp_code", required = false) String rp_code){
+		String result = "phone_or_code_null";
+		if(rp_phone != null && rp_phone != "" && rp_code !=null && rp_code != ""){
+		}
+		return result;
+	}
+	
+	/**
+	 * 进入注册页面
+	 * 
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value="/register.html",method=RequestMethod.GET)
+	public String indexRegister(@ModelAttribute("user") UserEntity user,
+			@RequestParam(value="type",required=false) String type){
+		if(type == null||type=="")
+			return "user/register";
+		else
+			return "cellphone/user/register";
+	}
+
+	/**
+	 * 注册
+	 * 
+	 * @param _user
+	 * @return
+	 */
+	@RequestMapping(value = "/frontend/register.html")
+	@ResponseBody
+	public String registerUser(HttpSession session, @RequestParam(value = "userStr", required = false) String userStr) {
+		String result = null;
+		if (userStr == null || userStr.equals(""))
+			return "nodata";
+
+		JSONObject userObject = JSONObject.fromObject(userStr);
+		UserEntity userObj = (UserEntity) userObject.toBean(userObject, UserEntity.class);
+		
+		
+		return result;
+	}
+
+	/**
+	 * 验证手机是否已经被注册
+	 * @param phone
+	 * @return
+	 */
+	@RequestMapping(value = "/frontend/checkPhone.html")
+	@ResponseBody
+	public Object checkPhoneNum(@RequestParam(value = "phone", required = false) String phone) {
+		String result = "success";
+		if (phone == null) {
+			result = "phone_null";
+			return result;
+		}
+		try {
+			User user = new User();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * 用户列表条件查询
+	 * 
+	 * @param currentpage
+	 * @param u_city
+	 * @param u_district
+	 * @param u_isStart
+	 * @param u_registerTime
+	 * @param u_phone
+	 * @return
+	 */
+	@RequestMapping(value="/userList.html",method=RequestMethod.GET)
+	public ModelAndView selectUserList(@RequestParam(value="currentpage",required=false) Integer currentpage,
+			@RequestParam(value="u_city",required=false) String u_province,
+			@RequestParam(value="u_city",required=false) String u_city,
+			@RequestParam(value="u_district",required=false) String u_district,
+			@RequestParam(value="u_isRegistered",required=false) String u_isRegistered,
+			@RequestParam(value="u_registerTime",required=false) String u_registerTime,
+			@RequestParam(value="u_phone",required=false) String u_phone,
+			@RequestParam(value="type",required=false) String type){
+		ModelAndView model = new ModelAndView();
+		Set<String> districtList = new HashSet<String>();
+		User user = new User();
+		if(u_city != null && u_city != "")
+			user.setCity(SQLTools.transfer(u_city));
+		/*
+		 * 市下的所有地区
+		 */
+		try {
+			String cityCounty = null;
+			List<User> users = userService.selectAll(user);
+			if (users.size() != 0) {
+				for (int i = 0; i < users.size(); i++) {
+					cityCounty = users.get(i).getCounty();
+					districtList.add(cityCounty);
+				}
+			}
+			logger.debug("========================" + districtList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
+		 * 条件查询
+		 */
+		if(u_district != null&& u_district != "")
+			user.setCounty(SQLTools.transfer(u_district));
+		if(u_phone != null&& u_phone != "")
+			user.setCellphone(SQLTools.transfer(u_phone));
+		/*if(!StringUtils.isNullOrEmpty(u_isRegistered)){// != null and ""
+			user.setIsRegistered(Integer.valueOf(u_isRegistered));
+		} else {
+			user.setIsStart(PlatforConstants.USER_STATE_NO_START);
+		}*/
+		if(u_registerTime != null && u_registerTime != ""){
+			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");  
+			try {
+				Date date = sdf.parse(u_registerTime);
+				user.setCreateTime(date);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}  
+		}
+		/*
+		 * page分页列表，将分页里要显示的所有数据都封装到分页中
+		 */
+		PageSupport page = new PageSupport();
+		try {
+			//获取后台总记录数
+			page.setTotalCount(23);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			page.setTotalCount(0);
+		}
+		// 总记录数必须大于0 才有意义
+		if (page.getTotalCount() > 0) {
+			if (currentpage != null) {
+				page.setPage(currentpage);// 设置当前页（用户输入）
+			}
+			if (page.getPage() <= 0) {// 如果输入的当前页<= 0,则设当前页为第一页
+				page.setPage(1);
+			}
+			if (page.getPage() > page.getPageCount()) {// 如果输入的当前页 > 总页数,则设当前页为最后一页
+				page.setPage(page.getPageCount());
+			}
+			user.setStarNum((page.getPage()-1)*page.getPageSize());//设置开始行
+			user.setPageSize(page.getPageSize());//设置每页显示数量
+			//该用户当前页列表的数据
+			List<User> userList = null;
+			try {
+	//			userList = userService.selectUserList(user);
+			} catch (Exception e) {
+				// TODO: handle exception
+				userList = null;
+				if (page == null) {
+					page = new PageSupport();
+					page.setItems(null);
+				}
+			}
+			page.setItems(userList);// 设置当前页列表数据
+		} else {
+			page.setItems(null);
+		}
+		if(this.getCurrentUser() != null)
+			model.addObject("roleId", this.getCurrentUser().getRoleId());
+		model.addObject("page", page);
+		model.addObject("districtList", districtList);
+		model.addObject("u_phone", u_phone);
+		model.addObject("u_city", u_city);
+		model.addObject("u_district", u_district);
+		model.addObject("u_isRegistered", u_isRegistered);
+		model.addObject("u_registerTime", u_registerTime);
+		if(type == null||type=="")
+			model.setViewName("user/userList");
+		else
+			model.setViewName("cellphone/user/userList");
+		return model;
+	}
+
+	/**
+	 * 用户详情
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "/userDetails.html", method = RequestMethod.GET)
+	public ModelAndView userDetails(@RequestParam(value = "userId", required = false) String userId,
+			@RequestParam(value = "type", required = false) String type) {
+		ModelAndView model = new ModelAndView();
+		User user = new User();
+		try {
+			user = userService.selectById(Integer.valueOf(userId));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.addObject("user", user);
+		if(type==null||type=="")
+			model.setViewName("/user/userDetails");
+		else
+			model.setViewName("cellphone/user/userDetails");
+		return model;
+	}
+
+	/**
+	 * 进入后台修改页面
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "/modifyUser.html", method = RequestMethod.GET)
+	public ModelAndView modifyUser(@RequestParam(value = "userId", required = false) String userId,
+			@RequestParam(value = "type", required = false) String type) {
+		ModelAndView model = new ModelAndView();
+		User user = new User();
+		if (userId != null) {
+			try {
+				user = userService.selectById(Integer.valueOf(userId));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		model.addObject("user", user);
+		if(type== null||type=="")
+			model.setViewName("/user/modifyUser");
+		else
+			model.setViewName("/cellphone/user/modifyUser");
+		return model;
+	}
+	/**
+	 * 进入前台修改页面
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "/modifyUserFontend.html", method = RequestMethod.GET)
+	public ModelAndView modifyUserFontend(
+			@RequestParam(value = "type", required = false) String type) {
+		ModelAndView model = new ModelAndView();
+		User user = null;
+		String userId = "";
+		//获取当前工程师id
+		User sessionUser = getCurrentUser();
+	//	if(sessionUser != null && sessionUser.getRoleId() == Constants.USER_ROLE_CLIENT){
+			 
+			try {
+				user = userService.selectById(sessionUser.getId());
+				userId = String.valueOf(user.getId());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	//	}
+		if (userId != null &&userId != "") {
+			try {
+				user = userService.selectById(Integer.valueOf(userId));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		model.addObject("user", user);
+		if(type== null||type=="")
+			model.setViewName("/user/personalSetting");
+		else
+			model.setViewName("/cellphone/user/personalSetting");
+		return model;
+	}
+	/**
+	 * 修改用户
+	 * 
+	 * @param _user
+	 * @return
+	 */
+	@RequestMapping(value = "/frontend/modifyUser.html", method = RequestMethod.POST)
+	@ResponseBody
+	public String saveModifyUser(@RequestParam(value = "user", required = false) String userString) {
+		String result = "failed";
+		if (userString != null) {
+			JSONObject userObject = JSONObject.fromObject(userString);
+			User _user = (User) userObject.toBean(userObject, User.class);
+
+			User sessionUser = getCurrentUser();
+			try {
+				_user.setModifyBy(sessionUser.getId());
+				_user.setModifyTime(new Date());
+				int i = userService.psn_update(_user);
+				if (i > 0)
+					result = "success";
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * 注销用户
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value="/backend/logoutUser.html", method = RequestMethod.GET)
+	@ResponseBody
+	public String logoutUser(@RequestParam(value="userId",required=false) String userId){
+		User user = new User();
+		String result = "failed";
+		try {
+			user = userService.selectById(Integer.valueOf(userId));
+			
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+
+	/**
+	 * 删除用户
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "/backend/delUser.html")
+	@ResponseBody
+	public String delUser(@RequestParam(value = "userId", required = false) Integer userId) {
+		User user = new User();
+		String result = "failed";
+		/*if(getCurrentUser() == null || getCurrentUser().getRoleId() != PlatforConstants.USER_ROLE_ADMIN){
+			result = "not_permissions";
+			return result;
+		}*/
+		try {
+			
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+}

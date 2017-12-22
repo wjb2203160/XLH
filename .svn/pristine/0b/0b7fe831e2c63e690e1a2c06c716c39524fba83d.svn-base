@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.goods.GoodsFormMapper">
+	<select id="selectById" parameterType="Integer" resultType="GoodsForm">
+		SELECT * FROM mtr_goods_form WHERE id=#{id} 
+	</select>
+	   <!-- 通过物资名称获取物资ID -->
+	<select id="selectByName" parameterType="String" resultType="Integer">
+		SELECT id FROM mtr_goods_form WHERE goodsName=#{goodsName} 
+	</select>
+	<select id="count" parameterType="GoodsForm" resultType="int">
+		SELECT count(1) FROM mtr_goods_form
+		<where>
+			<if test="goodsType != null">AND goodsType = #{goodsType}
+			</if>
+			<if test="goodsCode != null">AND goodsCode like CONCAT('%',#{goodsCode},'%')
+			</if>
+			<if test="goodsName != null">AND goodsName like CONCAT('%',#{goodsName},'%')
+			</if>
+		</where>
+	</select>
+	<select id="getPagesList" parameterType="GoodsForm" resultType="GoodsForm">
+		SELECT * FROM mtr_goods_form
+		<where>
+			<if test="goodsType != null">AND goodsType = #{goodsType}
+			</if>
+			<if test="goodsCode != null">AND goodsCode like CONCAT('%',#{goodsCode},'%')
+			</if>
+			<if test="goodsName != null">AND goodsName like CONCAT('%',#{goodsName},'%')
+			</if>
+		</where>
+		order by createTime desc limit #{starNum},#{pageSize}
+	</select>
+	<select id="selectAll" parameterType="GoodsForm" resultType="GoodsForm">
+		SELECT * FROM mtr_goods_form
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="goodsType != null">AND goodsType = #{goodsType}
+			</if>
+			<if test="goodsCode != null">AND goodsCode = #{goodsCode}
+			</if>
+			<if test="goodsName != null">AND goodsName = #{goodsName}
+			</if>
+			<if test="goodsCount != null">AND goodsCount = #{goodsCount}
+			</if>
+			<if test="price != null">AND price = #{price}
+			</if>
+			<if test="goodsInBy != null">AND goodsInBy = #{goodsInBy}
+			</if>
+			<if test="goodsTime != null">AND goodsTime = #{goodsTime}
+			</if>
+			<if test="goodsInCount != null">AND goodsInCount = #{goodsInCount}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="GoodsForm">
+		INSERT INTO mtr_goods_form (id,goodsType,goodsCode,goodsName,goodsCount,price,goodsInBy,goodsTime,goodsInCount,createBy,modifyBy,createTime,modifyTime,remarks)
+		VALUES (#{id},#{goodsType},#{goodsCode},#{goodsName},#{goodsCount},#{price},#{goodsInBy},#{goodsTime},#{goodsInCount},#{createBy},#{modifyBy},#{createTime},#{modifyTime},#{remarks})
+	</insert>
+	<update id="update" parameterType="GoodsForm">
+		UPDATE mtr_goods_form SET
+		goodsType=#{goodsType},goodsCode=#{goodsCode},goodsName=#{goodsName},goodsCount=#{goodsCount},price=#{price},goodsInBy=#{goodsInBy},goodsTime=#{goodsTime},goodsInCount=#{goodsInCount},createBy=#{createBy},modifyBy=#{modifyBy},createTime=#{createTime},modifyTime=#{modifyTime},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="GoodsForm">
+		DELETE FROM mtr_goods_form WHERE id=#{id}
+	</delete>
+</mapper>

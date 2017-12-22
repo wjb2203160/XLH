@@ -1,0 +1,109 @@
+package com.mtr.psn.model.goods;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.mtr.psn.model.BaseModel;
+
+public class GoodsRegistrationForm extends BaseModel implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Integer goodsId;
+	private Integer claimantCount;
+	private Integer claimantBy;
+	private String claimantName;
+	private String claimantPhone;
+	private Double price;
+	private Integer dep;
+	private String claimantTime;
+	private String claimantSite;
+	private Integer handledBy;
+	private String goodsName;
+	
+	public Integer getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(Integer goodsId) {
+		this.goodsId = goodsId;
+	}
+
+	public Integer getClaimantCount() {
+		return claimantCount;
+	}
+
+	public void setClaimantCount(Integer claimantCount) {
+		this.claimantCount = claimantCount;
+	}
+
+	public Integer getClaimantBy() {
+		return claimantBy;
+	}
+
+	public void setClaimantBy(Integer claimantBy) {
+		this.claimantBy = claimantBy;
+	}
+
+	public String getClaimantName() {
+		return claimantName;
+	}
+
+	public void setClaimantName(String claimantName) {
+		this.claimantName = claimantName;
+	}
+
+	public String getClaimantPhone() {
+		return claimantPhone;
+	}
+
+	public void setClaimantPhone(String claimantPhone) {
+		this.claimantPhone = claimantPhone;
+	}
+
+	public Integer getDep() {
+		return dep;
+	}
+
+	public void setDep(Integer dep) {
+		this.dep = dep;
+	}
+
+	public String getClaimantTime() {
+		return claimantTime;
+	}
+
+	public void setClaimantTime(String claimantTime) {
+		this.claimantTime = claimantTime;
+	}
+
+	public String getClaimantSite() {
+		return claimantSite;
+	}
+
+	public void setClaimantSite(String claimantSite) {
+		this.claimantSite = claimantSite;
+	}
+
+	public Integer getHandledBy() {
+		return handledBy;
+	}
+
+	public void setHandledBy(Integer handledBy) {
+		this.handledBy = handledBy;
+	}
+
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+}

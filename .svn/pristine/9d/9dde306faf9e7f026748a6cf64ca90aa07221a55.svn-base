@@ -1,0 +1,42 @@
+package com.mtr.psn.service.user;
+
+import java.util.List;
+import com.mtr.psn.model.user.User;
+
+public interface UserService {
+
+	public User selectById(Integer id)throws Exception;
+	
+	public User selectByPhone(String cellphone)throws Exception;
+	
+	public User selectUser(User user)throws Exception;
+
+	public List<User> selectAll(User user)throws Exception;
+
+	public int psn_insert(User user)throws Exception;
+
+	public int psn_update(User user)throws Exception;
+
+	public int psn_delete(User user)throws Exception;
+
+	/**
+	 * 获取对象总数量
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
+	public int count(User user)throws Exception;
+	/**
+	 * 获取分页用户列表
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
+	public List<User> getUserList(User user)throws Exception;
+	/**
+	 * 更新用户（删除用户图片）
+	 * @return
+	 * @throws Exception
+	 */
+	public int delUserPic(User user)throws Exception;
+}

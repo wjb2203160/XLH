@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.user.UserMapper">
+	<select id="selectById" parameterType="Integer" resultType="User">
+		SELECT * FROM u_user WHERE id=#{id} 
+	</select>
+	<!-- 手机查询 -->
+	<select id="selectByPhone" parameterType="String" resultType="User">
+		SELECT * FROM u_user where cellphone = #{cellphone}
+	</select>
+	<!-- 登陆:手机号/密码/姓名/证件编号-->
+	<select id="selectUser" parameterType="User" resultType="User">
+		SELECT * FROM u_user 
+		<where>
+			<if test="cellphone != null">AND cellphone = #{cellphone}
+			</if>
+			<if test="password != null">AND password = #{password}
+			</if>
+			<if test="userName != null">AND userName = #{userName}
+			</if>
+			<if test="cardCode != null">AND cardCode = #{cardCode}
+			</if>
+		</where>
+	</select>
+	
+	<!-- count -->
+	<select id="count" resultType="int" parameterType="user">
+		select count(1) from u_user
+		<where>
+			<if test="cellphone != null">AND cellphone like CONCAT('%',#{cellphone},'%')
+			</if>
+			<if test="stateId != null">AND stateId = #{stateId}
+			</if>
+			<if test="roleId != null">AND roleId = #{roleId}
+			</if>
+			<if test="isStart != null">AND isStart = #{isStart}
+			</if>
+			<if test="userTypeId != null">AND userTypeId = #{userTypeId}
+			</if>
+		</where>
+	</select>
+	
+	<!-- getUserList -->
+	<select id="getUserList" resultType="user" parameterType="user">
+		select * from u_user
+		<where>
+			<if test="cellphone != null">AND cellphone like CONCAT('%',#{cellphone},'%')
+			</if>
+			<if test="stateId != null">AND stateId = #{stateId}
+			</if>
+			<if test="roleId != null">AND roleId = #{roleId}
+			</if>
+			<if test="isStart != null">AND isStart = #{isStart}
+			</if>
+			<if test="userTypeId != null">AND userTypeId = #{userTypeId}
+			</if>
+		</where>
+		order by createTime desc limit #{starNum},#{pageSize}
+	</select>
+	
+	<!-- delUserPic -->
+	<update id="delUserPic" parameterType="user">
+		update au_user
+		<set>
+			<if test="idCardPicPathA != null">idCardPicPathA = null</if>
+			<if test="idCardPicPathB != null">,idCardPicPathB = null</if>
+			<if test="headPortraitPath != null">,headPortraitPath = null</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="selectAll" parameterType="User" resultType="User">
+		SELECT * FROM u_user
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="cellphone != null">AND cellphone = #{cellphone}
+			</if>
+			<if test="password != null">AND password = #{password}
+			</if>
+			<if test="userName != null">AND userName = #{userName}
+			</if>
+			<if test="gender != null">AND gender = #{gender}
+			</if>
+			<if test="birthday != null">AND birthday = #{birthday}
+			</if>
+			<if test="cardTypeName != null">AND cardTypeName = #{cardTypeName}
+			</if>
+			<if test="cardCode != null">AND cardCode = #{cardCode}
+			</if>
+			<if test="country != null">AND country = #{country}
+			</if>
+			<if test="province != null">AND province = #{province}
+			</if>
+			<if test="city != null">AND city = #{city}
+			</if>
+			<if test="county != null">AND county = #{county}
+			</if>
+			<if test="address != null">AND address = #{address}
+			</if>
+			<if test="email != null">AND email = #{email}
+			</if>
+			<if test="roleId != null">AND roleId = #{roleId}
+			</if>
+			<if test="hiredate != null">AND hiredate = #{hiredate}
+			</if>
+			<if test="idCardPicPathA != null">AND idCardPicPathA = #{idCardPicPathA}
+			</if>
+			<if test="idCardPicPathB != null">AND idCardPicPathB = #{idCardPicPathB}
+			</if>
+			<if test="headPortraitPath != null">AND headPortraitPath = #{headPortraitPath}
+			</if>
+			<if test="superior != null">AND superior = #{superior}
+			</if>
+			<if test="lastLoginTime != null">AND lastLoginTime = #{lastLoginTime}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="stateId != null">AND stateId = #{stateId}
+			</if>
+			<if test="userTypeId != null">AND userTypeId = #{userTypeId}
+			</if>
+			<if test="isStart != null">AND isStart = #{isStart}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="User">
+		INSERT INTO u_user (id,cellphone,password,userName,gender,birthday,cardTypeName,
+			cardCode,country,province,city,county,address,email,roleId,hiredate,idCardPicPathA,
+			idCardPicPathB,headPortraitPath,superior,lastLoginTime,createTime,createBy,modifyTime,
+			modifyBy,stateId,userTypeId,isStart,remarks)
+		VALUES (#{id},#{cellphone},#{password},#{userName},#{gender},#{birthday},
+			#{cardTypeName},#{cardCode},#{country},#{province},#{city},#{county},
+			#{address},#{email},#{roleId},#{hiredate},#{idCardPicPathA},#{idCardPicPathB},
+			#{headPortraitPath},#{superior},#{lastLoginTime},#{createTime},#{createBy},#{modifyTime},
+			#{modifyBy},#{stateId},#{userTypeId},#{isStart},#{remarks})
+	</insert>
+	<update id="update" parameterType="User">
+		UPDATE u_user SET
+			cellphone=#{cellphone},password=#{password},userName=#{userName},gender=#{gender},
+			birthday=#{birthday},cardTypeName=#{cardTypeName},cardCode=#{cardCode},country=#{country},
+			province=#{province},city=#{city},county=#{county},address=#{address},email=#{email},
+			roleId=#{roleId},hiredate=#{hiredate},idCardPicPathA=#{idCardPicPathA},
+			idCardPicPathB=#{idCardPicPathB},headPortraitPath=#{headPortraitPath},superior=#{superior},
+			lastLoginTime=#{lastLoginTime},createTime=#{createTime},createBy=#{createBy},
+			modifyTime=#{modifyTime},modifyBy=#{modifyBy},stateId=#{stateId},userTypeId=#{userTypeId},
+			isStart=#{isStart},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="User">
+		DELETE FROM u_user WHERE id=#{id}
+	</delete>
+</mapper>

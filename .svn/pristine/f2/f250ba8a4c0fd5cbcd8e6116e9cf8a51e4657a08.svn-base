@@ -1,0 +1,47 @@
+package com.mtr.psn.model.member;
+
+import java.io.Serializable;
+
+import com.mtr.psn.model.BaseModel;
+
+public class Rider extends BaseModel implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Integer userId;
+	private String riderName;
+	private String dep;
+	private Integer teamID;
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getRiderName() {
+		return riderName;
+	}
+
+	public void setRiderName(String riderName) {
+		this.riderName = riderName;
+	}
+
+	public String getDep() {
+		return dep;
+	}
+
+	public void setDep(String dep) {
+		this.dep = dep;
+	}
+
+	public Integer getTeamID() {
+		return teamID;
+	}
+
+	public void setTeamID(Integer teamID) {
+		this.teamID = teamID;
+	}
+
+}

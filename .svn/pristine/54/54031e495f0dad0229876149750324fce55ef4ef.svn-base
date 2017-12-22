@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.orders.ComplaintFormMapper">
+	<select id="selectById" parameterType="Integer" resultType="ComplaintForm">
+		SELECT * FROM complaintform WHERE id=#{id} 
+	</select>
+	<!-- 获取扣除金额 -->
+	<select id="selectMoneyByRider" parameterType="QueryComplaintForm" resultType="ComplaintForm">
+		SELECT complaintAmount FROM complaintForm 
+		<where>
+			<if test="orderForm != null">AND complaintDate &gt;= #{orderForm}
+			</if>
+			<if test="orderTo != null">AND complaintDate &lt; #{orderTo}
+			</if>
+			<if test="riderID != null">AND riderID = #{riderID}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectAll" parameterType="ComplaintForm" resultType="ComplaintForm">
+		SELECT * FROM complaintform
+		<where>
+			<if test="complaintDate != null">AND complaintDate = #{complaintDate}
+			</if>
+			<if test="complaintNum != null">AND complaintNum = #{complaintNum}
+			</if>
+			<if test="complaintType != null">AND complaintType = #{complaintType}
+			</if>
+			<if test="franchiseeID != null">AND franchiseeID = #{franchiseeID}
+			</if>
+			<if test="teamID != null">AND teamID = #{teamID}
+			</if>
+			<if test="merchantID != null">AND merchantID = #{merchantID}
+			</if>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="billNum != null">AND billNum = #{billNum}
+			</if>
+			<if test="complaintAmount != null">AND complaintAmount = #{complaintAmount}
+			</if>
+			<if test="reason != null">AND reason = #{reason}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="ComplaintForm">
+		INSERT INTO complaintform (complaintDate,complaintNum,complaintType,franchiseeID,teamID,merchantID,id,billNum,complaintAmount,reason,remarks)
+		VALUES (#{complaintDate},#{complaintNum},#{complaintType},#{franchiseeID},#{teamID},#{merchantID},#{id},#{billNum},#{complaintAmount},#{reason},#{remarks})
+	</insert>
+	<update id="update" parameterType="ComplaintForm">
+		UPDATE complaintform SET
+		complaintNum=#{complaintNum},complaintType=#{complaintType},franchiseeID=#{franchiseeID},teamID=#{teamID},merchantID=#{merchantID},id=#{id},billNum=#{billNum},complaintAmount=#{complaintAmount},reason=#{reason},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="ComplaintForm">
+		DELETE FROM complaintform WHERE id=#{id}
+	</delete>
+</mapper>

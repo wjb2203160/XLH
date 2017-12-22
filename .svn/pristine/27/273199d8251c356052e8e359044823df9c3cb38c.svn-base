@@ -1,0 +1,36 @@
+package com.mtr.psn.service.other;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import com.mtr.psn.mapper.other.DataDictionaryMapper;
+import com.mtr.psn.model.other.DataDictionary;
+
+@Service
+public class DataDictionaryServiceImpl implements DataDictionaryService {
+
+	@Resource
+	private DataDictionaryMapper dataDictionaryMapper;
+
+	@Override
+	public DataDictionary selectById(Integer id)throws Exception{
+		return	dataDictionaryMapper.selectById(id);
+	}
+	@Override
+	public List<DataDictionary> selectAll(DataDictionary dataDictionary)throws Exception{
+		return	dataDictionaryMapper.selectAll(dataDictionary);
+	}
+	@Override
+	public int psn_insert(DataDictionary dataDictionary)throws Exception{
+		return	dataDictionaryMapper.insert(dataDictionary);
+	}
+	@Override
+	public int psn_update(DataDictionary dataDictionary)throws Exception{
+		return	dataDictionaryMapper.update(dataDictionary);
+	}
+	@Override
+	public int psn_delete(DataDictionary dataDictionary)throws Exception{
+		return	dataDictionaryMapper.delete(dataDictionary);
+	}
+}

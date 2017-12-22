@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.user.UserTypeMapper">
+	<select id="selectById" parameterType="Long" resultType="UserType">
+		SELECT * FROM u_user_type WHERE id=#{id} 
+	</select>
+	<select id="selectAll" parameterType="UserType" resultType="UserType">
+		SELECT * FROM u_user_type
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="userId != null">AND userId = #{userId}
+			</if>
+			<if test="userType != null">AND userType = #{userType}
+			</if>
+			<if test="typeName != null">AND typeName = #{typeName}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="UserType">
+		INSERT INTO u_user_type (id,userId,userType,typeName,createTime,modifyTime,createBy,modifyBy,remarks)
+		VALUES (#{id},#{userId},#{userType},#{typeName},#{createTime},#{modifyTime},#{createBy},#{modifyBy},#{remarks})
+	</insert>
+	<update id="update" parameterType="UserType">
+		UPDATE u_user_type SET
+		userId=#{userId},userType=#{userType},typeName=#{typeName},createTime=#{createTime},modifyTime=#{modifyTime},createBy=#{createBy},modifyBy=#{modifyBy},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="UserType">
+		DELETE FROM u_user_type WHERE id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.orders.OrderFormMapper">
+	<select id="selectById" parameterType="Integer" resultType="OrderForm">
+		SELECT * FROM orderform WHERE id=#{id} 
+	</select>
+	<select id="selectAll" parameterType="OrderForm" resultType="OrderForm">
+		SELECT * FROM orderform
+		<where>
+			<if test="orderDate != null">AND orderDate = #{orderDate}
+			</if>
+			<if test="franchiseeID != null">AND franchiseeID = #{franchiseeID}
+			</if>
+			<if test="teamID != null">AND teamID = #{teamID}
+			</if>
+			<if test="merchantID != null">AND merchantID = #{merchantID}
+			</if>
+			<if test="orderFrom != null">AND orderFrom = #{orderFrom}
+			</if>
+			<if test="orderNum != null">AND orderNum = #{orderNum}
+			</if>
+			<if test="billNum != null">AND billNum = #{billNum}
+			</if>
+			<if test="riderID != null">AND riderID = #{riderID}
+			</if>
+			<if test="overTime != null">AND overTime = #{overTime}
+			</if>
+			<if test="status != null">AND status = #{status}
+			</if>
+			<if test="fastDelivery != null">AND fastDelivery = #{fastDelivery}
+			</if>
+			<if test="reason != null">AND reason = #{reason}
+			</if>
+			<if test="result != null">AND result = #{result}
+			</if>
+			<if test="illegal != null">AND illegal = #{illegal}
+			</if>
+			<if test="orderTime != null">AND orderTime = #{orderTime}
+			</if>
+			<if test="endTime != null">AND endTime = #{endTime}
+			</if>
+			<if test="tdFee != null">AND tdFee = #{tdFee}
+			</if>
+			<if test="jcFee != null">AND jcFee = #{jcFee}
+			</if>
+			<if test="hdSubsidy != null">AND hdSubsidy = #{hdSubsidy}
+			</if>
+			<if test="djSubsidy != null">AND djSubsidy = #{djSubsidy}
+			</if>
+			<if test="sxSubsidy != null">AND sxSubsidy = #{sxSubsidy}
+			</if>
+			<if test="jlSubsidy != null">AND jlSubsidy = #{jlSubsidy}
+			</if>
+			<if test="sdSubsidy != null">AND sdSubsidy = #{sdSubsidy}
+			</if>
+			<if test="tqSubsidy != null">AND tqSubsidy = #{tqSubsidy}
+			</if>
+			<if test="yxsSubsidy != null">AND yxsSubsidy = #{yxsSubsidy}
+			</if>
+			<if test="xtDebit != null">AND xtDebit = #{xtDebit}
+			</if>
+			<if test="psDebit != null">AND psDebit = #{psDebit}
+			</if>
+			<if test="ddDebit != null">AND ddDebit = #{ddDebit}
+			</if>
+			<if test="sxDebit != null">AND sxDebit = #{sxDebit}
+			</if>
+			<if test="wgDebit != null">AND wgDebit = #{wgDebit}
+			</if>
+			<if test="weightMarkup != null">AND weightMarkup = #{weightMarkup}
+			</if>
+			<if test="jjDebit != null">AND jjDebit = #{jjDebit}
+			</if>
+			<if test="llDebit != null">AND llDebit = #{llDebit}
+			</if>
+			<if test="wgfDebit != null">AND wgfDebit = #{wgfDebit}
+			</if>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="OrderForm">
+		INSERT INTO orderform (orderDate,franchiseeID,teamID,merchantID,orderFrom,orderNum,billNum,riderID,overTime,status,fastDelivery,reason,result,illegal,orderTime,endTime,tdFee,jcFee,hdSubsidy,djSubsidy,sxSubsidy,jlSubsidy,sdSubsidy,tqSubsidy,yxsSubsidy,xtDebit,psDebit,ddDebit,sxDebit,wgDebit,weightMarkup,jjDebit,llDebit,wgfDebit,id,remarks)
+		VALUES (#{orderDate},#{franchiseeID},#{teamID},#{merchantID},#{orderFrom},#{orderNum},#{billNum},#{riderID},#{overTime},#{status},#{fastDelivery},#{reason},#{result},#{illegal},#{orderTime},#{endTime},#{tdFee},#{jcFee},#{hdSubsidy},#{djSubsidy},#{sxSubsidy},#{jlSubsidy},#{sdSubsidy},#{tqSubsidy},#{yxsSubsidy},#{xtDebit},#{psDebit},#{ddDebit},#{sxDebit},#{wgDebit},#{weightMarkup},#{jjDebit},#{llDebit},#{wgfDebit},#{id},#{remarks})
+	</insert>
+	<update id="update" parameterType="OrderForm">
+		UPDATE orderform SET
+		franchiseeID=#{franchiseeID},teamID=#{teamID},merchantID=#{merchantID},orderFrom=#{orderFrom},orderNum=#{orderNum},billNum=#{billNum},riderID=#{riderID},overTime=#{overTime},status=#{status},fastDelivery=#{fastDelivery},reason=#{reason},result=#{result},illegal=#{illegal},orderTime=#{orderTime},endTime=#{endTime},tdFee=#{tdFee},jcFee=#{jcFee},hdSubsidy=#{hdSubsidy},djSubsidy=#{djSubsidy},sxSubsidy=#{sxSubsidy},jlSubsidy=#{jlSubsidy},sdSubsidy=#{sdSubsidy},tqSubsidy=#{tqSubsidy},yxsSubsidy=#{yxsSubsidy},xtDebit=#{xtDebit},psDebit=#{psDebit},ddDebit=#{ddDebit},sxDebit=#{sxDebit},wgDebit=#{wgDebit},weightMarkup=#{weightMarkup},jjDebit=#{jjDebit},llDebit=#{llDebit},wgfDebit=#{wgfDebit},id=#{id},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="OrderForm">
+		DELETE FROM orderform WHERE id=#{id}
+	</delete>
+</mapper>

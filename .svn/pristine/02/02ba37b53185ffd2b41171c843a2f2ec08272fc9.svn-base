@@ -1,0 +1,21 @@
+package com.mtr.psn.service.orders;
+
+import java.util.List;
+import com.mtr.psn.model.orders.Appealform;
+import com.mtr.psn.model.orders.QueryAppealForm;
+
+public interface AppealformService {
+
+	public Appealform selectById(Integer id)throws Exception;
+
+	public List<Appealform> selectAll(Appealform appealForm)throws Exception;
+	
+	public List<Appealform> selectMoneyByRider(QueryAppealForm appealform)throws Exception;
+
+	public int psn_insert(Appealform appealForm)throws Exception;
+
+	public int psn_update(Appealform appealForm)throws Exception;
+
+	public int psn_delete(Appealform appealForm)throws Exception;
+
+}

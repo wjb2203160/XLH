@@ -1,0 +1,100 @@
+package com.mtr.psn.transmit;
+
+import java.io.File;  
+import java.io.FileNotFoundException;  
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;  
+import java.sql.PreparedStatement;  
+import java.sql.SQLException;  
+import java.util.Scanner;  
+  
+public class testImport
+{  
+    private static Connection con;  
+  
+    public static void main(String[] args) throws FileNotFoundException, SQLException  
+    {  
+  
+        long startTime = System.currentTimeMillis();  
+        File file = new File("D:/2017-10-01.csv");  
+  
+        Scanner in = new Scanner(file);  
+  
+        getConnect();  
+        System.out.println("数据库连接成功");  
+        insert_data(in);  
+  
+        long EndTime = System.currentTimeMillis();  
+        long time = (EndTime - startTime) / 1000;  
+  
+        System.out.println("导入数据共用时：" + time);  
+    }  
+  
+    private static void insert_data(Scanner in) throws SQLException  
+    {  
+        int count = 0;  
+        String sql = "insert ignore into appealform (complaintDate,complaintNum,complaintType,franchiseeID,teamID,merchantID,orderNum,billNum,complaintAmount,reason)"  
+                + "values(?,?,?,?,?,?,?,?,?,?)";  
+  
+        con.setAutoCommit(false);  
+        PreparedStatement pstmt = con.prepareStatement(sql);  
+        in.nextLine(); 
+        while (in.hasNext())  
+        {  
+            String temp1 = in.nextLine();  
+            String[] temp = temp1.split(",");  
+  
+            
+                pstmt.setDate(1, Date.valueOf(temp[0]));  
+                pstmt.setInt(2, Integer.valueOf(temp[1]));  
+                pstmt.setString(3, temp[2]);  
+                pstmt.setInt(4, Integer.valueOf(temp[4]));  
+                pstmt.setInt(5, Integer.valueOf(temp[6]));  
+                pstmt.setInt(6, Integer.valueOf(temp[8]));  
+                pstmt.setString(7, temp[9].substring(1,temp[9].length()));  
+                pstmt.setString(8, temp[10].substring(1,temp[10].length()));  
+                pstmt.setDouble(9, Double.valueOf(temp[11]));  
+                pstmt.setString(10, temp[12]);  
+             
+  
+            pstmt.addBatch();  
+  
+            count++;  
+  
+            if (count == 20000)  
+            {  
+                count = execute(pstmt, count);  
+            }  
+        }  
+        pstmt.executeBatch();  
+        con.commit();  
+  
+    }  
+  
+    public static int execute(PreparedStatement pstmt, int count) throws SQLException  
+    {  
+  
+        pstmt.executeBatch();  
+        con.commit();  
+        return 0;  
+  
+    }  
+  
+    private static void getConnect()  
+    {  
+        try  
+        {  
+            Class.forName("com.mysql.jdbc.Driver");  
+            con = DriverManager.getConnection(  
+                    "jdbc:mysql://127.0.0.1:3306/fiancesystem?useUnicode=true&characterEncoding=utf8&useServerPrepStmts=false&rewriteBatchedStatements=true",  
+                    "root", "123456");  
+        }  
+        catch (ClassNotFoundException | SQLException e)  
+        {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        }  
+    }  
+  
+}  

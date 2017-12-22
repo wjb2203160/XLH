@@ -1,0 +1,47 @@
+package com.mtr.psn.controller.orders;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mtr.psn.common.Constants;
+import com.mtr.psn.common.RedisAPI;
+import com.mtr.psn.controller.BaseController;
+import com.mtr.psn.model.Menu;
+import com.mtr.psn.model.user.Authority;
+import com.mtr.psn.model.user.Function;
+import com.mtr.psn.model.user.User;
+import com.mtr.psn.service.user.FunctionService;
+import com.mtr.psn.service.user.UserService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+@Controller
+public class OrderFormController extends BaseController {
+
+ 
+	 
+	/**
+	 * 进入表格
+	 
+	 * @return
+	 */
+	@RequestMapping(value="/calendar.html")
+	public ModelAndView maincalendar(){
+	 return new ModelAndView("/theShippingBills");
+	}
+	
+	
+}

@@ -1,0 +1,59 @@
+package com.mtr.psn.service.pay;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import com.mtr.psn.mapper.pay.WageMapper;
+import com.mtr.psn.model.goods.GoodsRegistrationForm;
+import com.mtr.psn.model.pay.QueryWage;
+import com.mtr.psn.model.pay.Wage;
+
+@Service
+public class WageServiceImpl implements WageService {
+
+	@Resource
+	private WageMapper wageMapper;
+
+	@Override
+	public Wage selectById(Long id)throws Exception{
+		return	wageMapper.selectById(id);
+	}
+	@Override
+	public List<Wage> selectAll(Wage wage)throws Exception{
+		return	wageMapper.selectAll(wage);
+	}
+	@Override
+	public int psn_insert(Wage wage)throws Exception{
+		return	wageMapper.insert(wage);
+	}
+	@Override
+	public int psn_update(Wage wage)throws Exception{
+		return	wageMapper.update(wage);
+	}
+	@Override
+	public int psn_delete(Wage wage)throws Exception{
+		return	wageMapper.delete(wage);
+	}
+	@Override
+	public int CountByRider(QueryWage wage)throws Exception{
+		return	wageMapper.CountByRider(wage);
+	}
+	@Override
+	public List<Wage> selectWageList(QueryWage wage)throws Exception{
+		return	wageMapper.selectWageList(wage);
+	}
+	
+	@Override
+	public List<GoodsRegistrationForm> selectGoodsList(QueryWage wage)throws Exception{
+		return	wageMapper.selectGoodsList(wage);
+	}
+	@Override
+	public List<Wage> selectTeamList(QueryWage wage)throws Exception{
+		return	wageMapper.selectTeamList(wage);
+	}
+	@Override
+	public int CountByTeam(QueryWage wage)throws Exception{
+		return	wageMapper.CountByTeam(wage);
+	}
+}

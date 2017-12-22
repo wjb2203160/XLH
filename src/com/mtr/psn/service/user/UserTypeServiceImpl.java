@@ -1,0 +1,36 @@
+package com.mtr.psn.service.user;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import com.mtr.psn.mapper.user.UserTypeMapper;
+import com.mtr.psn.model.user.UserType;
+
+@Service
+public class UserTypeServiceImpl implements UserTypeService {
+
+	@Resource
+	private UserTypeMapper userTypeMapper;
+
+	@Override
+	public UserType selectById(Long id)throws Exception{
+		return	userTypeMapper.selectById(id);
+	}
+	@Override
+	public List<UserType> selectAll(UserType userType)throws Exception{
+		return	userTypeMapper.selectAll(userType);
+	}
+	@Override
+	public int psn_insert(UserType userType)throws Exception{
+		return	userTypeMapper.insert(userType);
+	}
+	@Override
+	public int psn_update(UserType userType)throws Exception{
+		return	userTypeMapper.update(userType);
+	}
+	@Override
+	public int psn_delete(UserType userType)throws Exception{
+		return	userTypeMapper.delete(userType);
+	}
+}

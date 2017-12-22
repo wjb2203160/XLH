@@ -1,0 +1,26 @@
+package com.mtr.psn.service.goods;
+
+import java.util.List;
+import com.mtr.psn.model.goods.GoodsRegistrationForm;
+import com.mtr.psn.model.goods.QueryRegistrationForm;
+import com.mtr.psn.model.webEntity.GoodsRegistrationFormEntiy;
+
+public interface GoodsRegistrationFormService {
+
+	public GoodsRegistrationForm selectById(Long id)throws Exception;
+
+	public int count(GoodsRegistrationForm goodsRegistrationForm)throws Exception;
+
+	public List<GoodsRegistrationFormEntiy> getPagesList(GoodsRegistrationForm goodsRegistrationForm)throws Exception;
+
+	public List<GoodsRegistrationForm> selectAll(GoodsRegistrationForm goodsRegistrationForm)throws Exception;
+	
+	public List<GoodsRegistrationForm> selectClaimantBy(QueryRegistrationForm goodsRegistrationForm)throws Exception;
+	
+	public int psn_insert(GoodsRegistrationForm goodsRegistrationForm)throws Exception;
+
+	public int psn_update(GoodsRegistrationForm goodsRegistrationForm)throws Exception;
+
+	public int psn_delete(GoodsRegistrationForm goodsRegistrationForm)throws Exception;
+
+}

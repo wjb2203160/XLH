@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.member.FranchiseeMapper">
+	<select id="selectById" parameterType="Integer" resultType="Franchisee">
+		SELECT * FROM franchisee WHERE id=#{id} 
+	</select>
+	<select id="selectAll" parameterType="Franchisee" resultType="Franchisee">
+		SELECT * FROM franchisee
+		<where>
+			<if test="franchiseeID != null">AND franchiseeID = #{franchiseeID}
+			</if>
+			<if test="franchiseeName != null">AND franchiseeName = #{franchiseeName}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+			<if test="id != null">AND id = #{id}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="Franchisee">
+		INSERT INTO franchisee (franchiseeID,franchiseeName,createTime,createBy,modifyTime,modifyBy,remarks,id)
+		VALUES (#{franchiseeID},#{franchiseeName},#{createTime},#{createBy},#{modifyTime},#{modifyBy},#{remarks},#{id})
+	</insert>
+	<update id="update" parameterType="Franchisee">
+		UPDATE franchisee SET
+		franchiseeName=#{franchiseeName},createTime=#{createTime},createBy=#{createBy},modifyTime=#{modifyTime},modifyBy=#{modifyBy},remarks=#{remarks},id=#{id}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="Franchisee">
+		DELETE FROM franchisee WHERE id=#{id}
+	</delete>
+</mapper>

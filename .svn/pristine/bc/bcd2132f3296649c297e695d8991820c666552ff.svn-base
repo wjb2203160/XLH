@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.member.RiderMapper">
+	<select id="selectById" parameterType="Integer" resultType="Rider">
+		SELECT * FROM rider WHERE id=#{id} 
+	</select>
+	<select id="count" parameterType="Rider" resultType="int">
+		SELECT count(1) FROM rider
+		<where>
+			<if test="userId != null">AND userId = #{userId}
+			</if>
+			<if test="riderName != null">AND riderName = #{riderName}
+			</if>
+			<if test="dep != null">AND dep = #{dep}
+			</if>
+			<if test="teamID != null">AND teamID = #{teamID}
+			</if>
+		</where>
+	</select>
+	<select id="getPagesList" parameterType="Rider" resultType="Rider">
+		SELECT * FROM rider
+		<where>
+			<if test="userId != null">AND userId = #{userId}
+			</if>
+			<if test="riderName != null">AND riderName = #{riderName}
+			</if>
+			<if test="dep != null">AND dep = #{dep}
+			</if>
+			<if test="teamID != null">AND teamID = #{teamID}
+			</if>
+		</where>
+		order by createTime desc limit #{starNum},#{pageSize}
+	</select>
+	<select id="selectAll" parameterType="Rider" resultType="Rider">
+		SELECT * FROM rider
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="userId != null">AND userId = #{userId}
+			</if>
+			<if test="riderName != null">AND riderName = #{riderName}
+			</if>
+			<if test="dep != null">AND dep = #{dep}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+			<if test="teamID != null">AND teamID = #{teamID}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="Rider">
+		INSERT INTO rider 
+		(id,userId,riderName,dep,createTime,createBy,modifyTime,modifyBy,remarks,teamID)
+		VALUES 
+		(#{id},#{userId},#{riderName},#{dep},#{createTime},#{createBy},#{modifyTime},
+			#{modifyBy},#{remarks},#{teamID})
+	</insert>
+	<update id="update" parameterType="Rider">
+		UPDATE rider SET
+			userId=#{userId},riderName=#{riderName},dep=#{dep},createTime=#{createTime},
+			createBy=#{createBy},modifyTime=#{modifyTime},modifyBy=#{modifyBy},
+			remarks=#{remarks},teamID=#{teamID}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="Rider">
+		DELETE FROM rider WHERE id=#{id}
+	</delete>
+</mapper>

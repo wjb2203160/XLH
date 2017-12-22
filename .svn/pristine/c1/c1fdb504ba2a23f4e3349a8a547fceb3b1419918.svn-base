@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.member.FranchiseeMapper">
+	<select id="selectById" parameterType="Integer" resultType="Franchisee">
+		SELECT * FROM franchisee WHERE id=#{id} 
+	</select>
+	<select id="selectAll" parameterType="Franchisee" resultType="Franchisee">
+		SELECT * FROM franchisee
+		<where>
+			<if test="franchiseeID != null">AND franchiseeID = #{franchiseeID}
+			</if>
+			<if test="franchiseeName != null">AND franchiseeName = #{franchiseeName}
+			</if>
+			<if test="licence != null">AND licence = #{licence}
+			</if>
+			<if test="phone != null">AND phone = #{phone}
+			</if>
+			<if test="country != null">AND country = #{country}
+			</if>
+			<if test="province != null">AND province = #{province}
+			</if>
+			<if test="city != null">AND city = #{city}
+			</if>
+			<if test="county != null">AND county = #{county}
+			</if>
+			<if test="address != null">AND address = #{address}
+			</if>
+			<if test="legalPerson != null">AND legalPerson = #{legalPerson}
+			</if>
+			<if test="legalUserId != null">AND legalUserId = #{legalUserId}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="Franchisee">
+		INSERT INTO franchisee 
+			(franchiseeID,franchiseeName,licence,phone,country,province,city,county,address,
+			legalPerson,legalUserId,createTime,createBy,modifyTime,modifyBy,remarks)
+		VALUES 
+			(#{franchiseeID},#{franchiseeName},#{licence},#{phone},#{country},#{province},#{city},
+			#{county},#{address},#{legalPerson},#{legalUserId},#{createTime},#{createBy},#{modifyTime},
+			#{modifyBy},#{remarks})
+	</insert>
+	<update id="update" parameterType="Franchisee">
+		UPDATE franchisee SET
+			franchiseeName=#{franchiseeName},licence=#{licence},phone=#{phone},country=#{country},
+			province=#{province},city=#{city},county=#{county},address=#{address},
+			legalPerson=#{legalPerson},legalUserId=#{legalUserId},createTime=#{createTime},
+			createBy=#{createBy},modifyTime=#{modifyTime},modifyBy=#{modifyBy},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="Franchisee">
+		DELETE FROM franchisee WHERE id=#{id}
+	</delete>
+</mapper>

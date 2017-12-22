@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.user.FunctionMapper">
+	<select id="selectById" parameterType="Long" resultType="Function">
+		SELECT * FROM u_function WHERE id=#{id} 
+	</select>
+	
+	<!-- getMainFunctionList -->
+	<select id="getMainFunctionList" resultType="function" parameterType="authority">
+		select * from u_function where ID 
+			IN(select functionId from u_authority where parentId=0 and roleId=#{roleId})
+	</select>
+	
+	<!-- getSubFunctionList -->
+	<select id="getSubFunctionList" resultType="function" parameterType="function">
+		select * from u_function where parentId=#{id} and ID 
+			IN(select functionId from u_authority where roleId=#{roleId})
+	</select>
+	
+	<select id="selectAll" parameterType="Function" resultType="Function">
+		SELECT * FROM u_function
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="functionCode != null">AND functionCode = #{functionCode}
+			</if>
+			<if test="functionName != null">AND functionName = #{functionName}
+			</if>
+			<if test="funcUrl != null">AND funcUrl = #{funcUrl}
+			</if>
+			<if test="parentId != null">AND parentId = #{parentId}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="Function">
+		INSERT INTO u_function (id,functionCode,functionName,funcUrl,parentId,createTime,remarks)
+		VALUES (#{id},#{functionCode},#{functionName},#{funcUrl},#{parentId},#{createTime},#{remarks})
+	</insert>
+	<update id="update" parameterType="Function">
+		UPDATE u_function SET
+		functionCode=#{functionCode},functionName=#{functionName},funcUrl=#{funcUrl},parentId=#{parentId},createTime=#{createTime},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="Function">
+		DELETE FROM u_function WHERE id=#{id}
+	</delete>
+</mapper>

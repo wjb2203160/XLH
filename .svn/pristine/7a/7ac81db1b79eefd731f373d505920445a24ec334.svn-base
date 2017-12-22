@@ -1,0 +1,20 @@
+package com.mtr.psn.mapper.member;
+
+import java.util.List;
+import com.mtr.psn.model.member.Rider;
+
+public interface RiderMapper {
+
+	public Rider selectById(Integer id)throws Exception;
+
+	public List<Rider> selectAll(Rider rider)throws Exception;
+	
+	public List<Rider> selectRider(Rider rider)throws Exception;
+
+	public int insert(Rider rider)throws Exception;
+
+	public int update(Rider rider)throws Exception;
+
+	public int delete(Rider rider)throws Exception;
+
+}

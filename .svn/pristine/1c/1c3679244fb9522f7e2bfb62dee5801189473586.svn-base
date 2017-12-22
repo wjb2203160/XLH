@@ -1,0 +1,118 @@
+package com.mtr.psn.model.orders;
+
+import java.io.Serializable;
+
+import com.mtr.psn.model.BaseStringTime;
+
+public class AppealForm extends BaseStringTime implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String complaintDate;
+	private Integer complaintNum;
+	private String complaintType;
+	private Integer franchiseeID;
+	private String franchiseeName;
+	private Integer teamID;
+ 
+	private String teamName;
+	private Integer riderID;
+	private String riderName;
+ 
+	private String billNum;
+	private double complaintAmount;
+	private String reason;
+ 
+	public String getComplaintDate() {
+		return complaintDate;
+	}
+
+	public void setComplaintDate(String complaintDate) {
+		this.complaintDate = complaintDate;
+	}
+
+	public Integer getComplaintNum() {
+		return complaintNum;
+	}
+
+	public void setComplaintNum(Integer complaintNum) {
+		this.complaintNum = complaintNum;
+	}
+
+	public String getComplaintType() {
+		return complaintType;
+	}
+
+	public void setComplaintType(String complaintType) {
+		this.complaintType = complaintType;
+	}
+
+	public String getRiderName() {
+		return riderName;
+	}
+
+	public void setRiderName(String riderName) {
+		this.riderName = riderName;
+	}
+	public Integer getFranchiseeID() {
+		return franchiseeID;
+	}
+
+	public void setFranchiseeID(Integer franchiseeID) {
+		this.franchiseeID = franchiseeID;
+	}
+	public String getFranchiseeName() {
+		return franchiseeName;
+	}
+
+	public void setFranchiseeName(String franchiseeName) {
+		this.franchiseeName = franchiseeName;
+	}
+	public Integer getTeamID() {
+		return teamID;
+	}
+
+	public void setTeamID(Integer teamID) {
+		this.teamID = teamID;
+	}
+ 
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+ 
+	public String getBillNum() {
+		return billNum;
+	}
+
+	public void setBillNum(String billNum) {
+		this.billNum = billNum;
+	}
+
+	public double getComplaintAmount() {
+		return complaintAmount;
+	}
+
+	public void setComplaintAmount(double complaintAmount) {
+		this.complaintAmount = complaintAmount;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public Integer getRiderID() {
+		return riderID;
+	}
+
+	public void setRiderID(Integer riderID) {
+		this.riderID = riderID;
+	}
+
+}

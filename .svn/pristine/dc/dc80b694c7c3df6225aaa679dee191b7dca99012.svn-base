@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.pay.WageMapper">
+	<select id="selectById" parameterType="Integer" resultType="Wage">
+		SELECT * FROM wage WHERE id=#{id} 
+	</select>
+	<select id="selectAll" parameterType="Wage" resultType="Wage">
+		SELECT * FROM wage
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="errorCount != null">AND errorCount = #{errorCount}
+			</if>
+			<if test="normalCount != null">AND normalCount = #{normalCount}
+			</if>
+			<if test="timeoutCount != null">AND timeoutCount = #{timeoutCount}
+			</if>
+			<if test="onTimeCount != null">AND onTimeCount = #{onTimeCount}
+			</if>
+			<if test="subsidization != null">AND subsidization = #{subsidization}
+			</if>
+			<if test="leakageBuckle != null">AND leakageBuckle = #{leakageBuckle}
+			</if>
+			<if test="referralFee != null">AND referralFee = #{referralFee}
+			</if>
+			<if test="insuranceFee != null">AND insuranceFee = #{insuranceFee}
+			</if>
+			<if test="amerce != null">AND amerce = #{amerce}
+			</if>
+			<if test="overAllowance != null">AND overAllowance = #{overAllowance}
+			</if>
+			<if test="shouldPay != null">AND shouldPay = #{shouldPay}
+			</if>
+			<if test="incomeTax != null">AND incomeTax = #{incomeTax}
+			</if>
+			<if test="advancePay != null">AND advancePay = #{advancePay}
+			</if>
+			<if test="electricity != null">AND electricity = #{electricity}
+			</if>
+			<if test="realPay != null">AND realPay = #{realPay}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="createName != null">AND createName = #{createName}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="modifyName != null">AND modifyName = #{modifyName}
+			</if>
+			<if test="remark != null">AND remark = #{remark}
+			</if>
+			<if test="wageDate != null">AND wageDate = #{wageDate}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="Wage">
+		INSERT INTO wage (id,errorCount,normalCount,timeoutCount,onTimeCount,subsidization,leakageBuckle,referralFee,insuranceFee,amerce,overAllowance,shouldPay,incomeTax,advancePay,electricity,realPay,createTime,createName,modifyTime,modifyName,remark,wageDate)
+		VALUES (#{id},#{errorCount},#{normalCount},#{timeoutCount},#{onTimeCount},#{subsidization},#{leakageBuckle},#{referralFee},#{insuranceFee},#{amerce},#{overAllowance},#{shouldPay},#{incomeTax},#{advancePay},#{electricity},#{realPay},#{createTime},#{createName},#{modifyTime},#{modifyName},#{remark},#{wageDate})
+	</insert>
+	<update id="update" parameterType="Wage">
+		UPDATE wage SET
+		errorCount=#{errorCount},normalCount=#{normalCount},timeoutCount=#{timeoutCount},onTimeCount=#{onTimeCount},subsidization=#{subsidization},leakageBuckle=#{leakageBuckle},referralFee=#{referralFee},insuranceFee=#{insuranceFee},amerce=#{amerce},overAllowance=#{overAllowance},shouldPay=#{shouldPay},incomeTax=#{incomeTax},advancePay=#{advancePay},electricity=#{electricity},realPay=#{realPay},createTime=#{createTime},createName=#{createName},modifyTime=#{modifyTime},modifyName=#{modifyName},remark=#{remark},wageDate=#{wageDate}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="Wage">
+		DELETE FROM wage WHERE id=#{id}
+	</delete>
+</mapper>

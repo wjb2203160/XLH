@@ -1,0 +1,18 @@
+package com.mtr.psn.mapper.orders;
+
+import java.util.List;
+import com.mtr.psn.model.orders.ComplaintForm;
+
+public interface ComplaintFormMapper {
+
+	public ComplaintForm selectById(Integer id)throws Exception;
+
+	public List<ComplaintForm> selectAll(ComplaintForm complaintForm)throws Exception;
+
+	public int insert(ComplaintForm complaintForm)throws Exception;
+
+	public int update(ComplaintForm complaintForm)throws Exception;
+
+	public int delete(ComplaintForm complaintForm)throws Exception;
+
+}

@@ -1,0 +1,193 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/pages/common/head.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
+<div>
+	<ul class="breadcrumb">
+		<li><a href="#">后台管理</a> <span class="divider">/</span></li>
+		<li><a href="/backend/userList.htm">薪资表管理</a></li>
+	</ul>
+</div>
+<!-- 用户列表展示 -->
+<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title>
+			<h2><i class="icon-user"></i> 薪资表管理</h2>
+			<div class="box-icon" onclick="SalaryAdd();">
+				<span class="icon32 icon-color icon-add custom-setting adduser"  id="intoAddSalary"></span>
+			</div>
+		</div>		
+		<div class="box-content" style="overflow:auto;">
+		 	<div class="control-group">
+
+                   <label style="display:inline" class="control-label" for="teamId">站点ID</label>
+                    
+                   <input  style="display:inline;width:80px" class="focused" id="teamId" type="text" >
+                   
+                   <label style="display:inline" class="control-label" for="siteName">站点名称</label>
+                    
+                   <input  style="display:inline;width:80px" class="focused" id="siteName" type="text" >
+
+	              <button type="button" class="btn btn-primary" onclick="TeamQuery();">查询</button>
+	              
+			  </div>
+			<table class="table table-striped table-bordered bootstrap-datatable datatable">
+				<thead>
+					<tr>
+					    <th>站点Id</th>
+						<th>站点名称</th>
+						<th>底薪</th>
+						<th>全勤奖金额</th>
+						<th>全勤天数</th>
+						<th>超时单量</th>
+						<th>超时单价</th>
+						<th>执行日期</th>
+						<th>创建时间</th>
+						<th>创建人</th>
+						<th>修改时间</th>
+						<th>修改人</th>
+						<th>备注</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:if test="${page.items != null }">
+						<c:forEach items="${page.items }" var="user">
+							<tr>
+							<td class="center">${user.id }</td>
+								<td class="center">${user.siteName }</td>
+								<td class="center">${user.basicSalary }</td>
+								<td class="center">${user.perfectAttendance }</td> 
+								<td class="center">${user.attendanceDay }</td>
+								<td class="center">${user.orderNum }</td>
+								<td class="center">${user.orderPrice }</td>
+								<td class="center"><fmt:formatDate value="${user.executionDate }" pattern="yyyy-MM-dd" /></td>
+								<td class="center">${user.createTime }</td>
+								<td class="center">${user.createBy }</td>
+								<td class="center">${user.modifyTime }</td>
+								<td class="center">${user.modifyBy }</td>
+								<td class="center">${user.remarks }</td>
+								<td class="center">
+									<a class="btn btn-success viewuser" href="/backend/salaryMx.html?currentpage=1&siteId=${user.id }&siteName=${user.siteName }"  ><i class="icon-zoom-in icon-white"></i>查看明细 </a>
+								 	<a class="btn btn-info modifyuser" href="#"  onclick="SalaryDetail(${user.id });"> <i class="icon-edit icon-white"></i> 修改</a>
+								  	<a class="btn btn-danger" href="#" onclick="DeleteSalaryData(${user.id });"> <i class="icon-trash icon-white"></i> 删除</a>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</tbody>
+			</table>
+			<div class="pagination pagination-centered">
+				<ul>
+					<c:choose>
+						<c:when test="${page.page == 1 }">
+							<li class="active"><a href="javascript:void();" title="首页">首页</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="/backend/salary.html?currentpage=${num }&siteName=${siteName }&id=${id }" title="首页">首页</a></li>
+						</c:otherwise>
+					</c:choose>
+					<c:if test="${page.prevPages != null }">
+						<c:forEach items="${page.prevPages }" var="num">
+							<li>
+							<a href="/backend/salary.html?currentpage=${num }&siteName=${siteName }&id=${id }" title="${num }">${num }</a>
+							</li>
+						</c:forEach>
+					</c:if>
+					<li class="active"><a href="#" title="${page.page }">${page.page }</a></li>
+					<c:if test="${page.nextPages != null }">
+						<c:forEach items="${page.nextPages }" var="num">
+							<li>
+							<a href="/backend/salary.html?currentpage=${num }&siteName=${siteName }&id=${id }" title="${num }">${num }</a>
+							</li>
+						</c:forEach>
+					</c:if>
+					<c:if test="${page.pageCount != null }">
+						<c:choose>
+						<c:when test="${page.page == page.pageCount }">
+							<li class="active"><a href="javascript:void();" title="尾页">尾页</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="/backend/salary.html?currentpage=${num }&siteName=${siteName }&id=${id }" title="尾页">尾页</a></li>
+						</c:otherwise>
+					</c:choose>
+					</c:if>
+					<c:if test="${page.pageCount == null }">
+						<li class="active"><a href="javascript:void();" title="尾页">尾页</a></li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 用户列表展示end -->
+<!-- 用户信息添加 -->
+ <div class="modal hide fade" id="SalaryDiv">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3>用户信息</h3>
+		</div>
+		<div class="modal-body">
+			<ul id="add_formtip"></ul>
+			<ul class="topul">
+			<!-- <li>
+				<label>站点Id:</label> 
+					<input id="siteId" type="text" />  
+					<span style="color: red; font-weight: bold;">*</span>
+				</li>
+				<li>
+				<label>站点名称:</label> 
+					<input id="teamName" type="text"  name="teamName" value="" /> 
+					<span style="color: red; font-weight: bold;">*</span>
+				</li> -->
+				<li>
+				<label>站点名称:</label> 
+				  <input  style="display:none; class="focused" id="selectUser" type="text" value="${teamID}">
+                        <select id="selectusertype" name="selectusertype" style="width: 150px;">
+				 
+				        </select>
+				        	<span style="color: red; font-weight: bold;">*</span>
+				        	</li>
+				<li>
+					<label>底薪:</label> 
+					<input id="basicSalary" type="text" name="basicSalary" value="" /> 
+				 
+					<span style="color: red; font-weight: bold;">*</span>
+				</li>
+				<li><label>全勤奖金额：</label> 
+					<input id="perfectAttendance" type="text" name="perfectAttendance" />
+					<span style="color: red; font-weight: bold;">*</span>
+				</li>
+				<li><label>全勤天数：</label> 
+				<input id="attendanceDay" type="text" name="attendanceDay"  />
+					<span style="color: red; font-weight: bold;">*</span></li>
+				<li><label>超时单量：</label>  
+				<input id="OrderNum" type="text" name="OrderNum"  />
+					<span style="color: red; font-weight: bold;">*</span></li>
+				
+				<li><label>超时单价：</label> 
+					<input id="orderPrice" type="text"  name="orderPrice" value="" />
+						 
+					 <span style="color: red; font-weight: bold;">*</span>
+				</li>
+				<li>
+					<label>执行日期：</label>
+					<input type="text" id="executionDate" onClick="WdatePicker();" readonly="readonly"  name="executionDate"  /> 
+					<span style="color: red; font-weight: bold;">*</span>
+				</li>
+				<li><label>备注：</label>
+				<input type="text" id="remarks"name="remarks" /> 
+				<span style="color: red; font-weight: bold;">*</span></li>
+				
+			</ul>
+			</div>
+		<div class="modal-footer">
+			<a href="#" class="btn addusercancel" data-dismiss="modal" >取消</a>
+			<a href="#" class="btn addusercancel"  onclick="SalaryConfirm();">保存</a>
+		</div>
+	 
+</div>
+
+<%@include file="/WEB-INF/pages/common/foot.jsp" %>
+<script src="/statics/localjs/salary.js"></script>
+<script type="text/javascript" src="/statics/medire/WdatePicker.js"></script>

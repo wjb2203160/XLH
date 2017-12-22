@@ -1,0 +1,70 @@
+package com.mtr.psn.service.orders;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import com.mtr.psn.mapper.orders.AppealformMapper;
+import com.mtr.psn.model.orders.Appealform;
+import com.mtr.psn.model.orders.QueryAppealform;
+
+@Service
+public class AppealformServiceImpl implements AppealformService {
+
+	@Resource
+	private AppealformMapper appealformMapper;
+
+	@Override
+	public Appealform selectById(Long id) throws Exception {
+		// TODO Auto-generated method stub
+		return appealformMapper.selectById(id);
+	}
+
+	@Override
+	public List<Appealform> selectAll(Appealform Appealform) throws Exception {
+		// TODO Auto-generated method stub
+		return appealformMapper.selectAll(Appealform);
+	}
+
+	@Override
+	public List<Appealform> selectMoneyByRider(QueryAppealform Appealform)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return appealformMapper.selectMoneyByRider(Appealform);
+	}
+
+	@Override
+	public List<Appealform> selectAppealformList(QueryAppealform Appealform)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return appealformMapper.selectAppealformList(Appealform);
+	}
+
+	@Override
+	public Integer Count(QueryAppealform Appealform) throws Exception {
+		// TODO Auto-generated method stub
+		return appealformMapper.Count(Appealform);
+	}
+
+	@Override
+	public int psn_insert(Appealform Appealform) throws Exception {
+		// TODO Auto-generated method stub
+		return appealformMapper.insert(Appealform);
+	}
+
+	@Override
+	public int psn_update(Appealform Appealform) throws Exception {
+		// TODO Auto-generated method stub
+		return appealformMapper.update(Appealform);
+	}
+
+	@Override
+	public int psn_delete(Appealform Appealform) throws Exception {
+		// TODO Auto-generated method stub
+		return appealformMapper.delete(Appealform);
+	}
+
+	
+	
+}

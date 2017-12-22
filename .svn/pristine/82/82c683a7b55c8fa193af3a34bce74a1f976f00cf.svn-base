@@ -1,0 +1,18 @@
+package com.mtr.psn.service.other;
+
+import java.util.List;
+import com.mtr.psn.model.other.DataDictionary;
+
+public interface DataDictionaryService {
+
+	public DataDictionary selectById(Integer id)throws Exception;
+
+	public List<DataDictionary> selectAll(DataDictionary dataDictionary)throws Exception;
+
+	public int psn_insert(DataDictionary dataDictionary)throws Exception;
+
+	public int psn_update(DataDictionary dataDictionary)throws Exception;
+
+	public int psn_delete(DataDictionary dataDictionary)throws Exception;
+
+}

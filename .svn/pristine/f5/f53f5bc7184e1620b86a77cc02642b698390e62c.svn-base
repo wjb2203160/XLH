@@ -1,0 +1,199 @@
+
+function Query(){//查询工资记录
+	show_query_hint("query_hint");
+	$.ajax({
+		type:'get',
+		url:'/pay/checkPayroll.do?currentpage=1&orderFrom='+$("#date01").val()+'&orderTo='+$("#date02").val()+'&riderID='+$("#riderId").val(),
+		success:function(model){ 
+			document.write(model);
+			document.close();
+		},
+ 	 	error:function(){
+ 	 		queryHintCallback("query_hint");
+			alert("失败！");
+		}
+	});
+}
+function CalMoney(){//计算工资
+	show_query_hint("query_hint");
+	$.ajax({
+		type:'get',
+		url:'/pay/checkPayroll.do?calWage=1&orderFrom='+$("#date01").val()+'&orderTo='+$("#date02").val()+'&currentpage=1&riderID='+$("#riderId").val(),
+		success:function(model){ 
+			document.write(model);
+			document.close();
+		},
+ 	 	error:function(){
+ 	 		queryHintCallback("query_hint");
+			alert("失败！");
+		}
+	});
+}
+function OutPutWage(){//导出工资表
+	show_query_hint("query_hint");
+	$.ajax({
+		type:'post',
+		url:'/frontend/outputOrder.html',
+		data:{
+			"orderFrom":$("#date01").val(),
+			"orderTo":$("#date02").val(),
+			"riderID":$("#riderId").val(),
+			},
+		success:function(model){ 
+			queryHintCallback("query_hint");
+			alert(model);
+			window.location.href = model;
+		},
+ 	 	error:function(){
+ 	 		queryHintCallback("query_hint");
+			alert("失败！");
+		}
+	});
+}
+
+function LoadDetail(riderId){
+	show_query_hint("query_hint");
+	$.ajax({
+		type:'post',
+		url:'/pay/checkPayrollDetail.do',
+		data:{
+			"riderID":riderId,
+			},
+		dataType:"json",
+		success:function(model){ 
+			queryHintCallback("query_hint");
+		 if(model!=""){
+			 wageEmpty();
+			 $("#wageDate").html(model.wageDate);
+			 $("#riderId").html(model.riderId);
+			 $("#riderName").html(model.riderName);
+			 $("#errorCount").html(model.errorCount);
+			 $("#normalCount").html(model.normalCount);
+			 $("#timeoutCount").html(model.timeoutCount);
+			 $("#onTimeCount").html(model.onTimeCount);
+			 $("#subsidization").html(model.subsidization);
+			 $("#leakageBuckle").val(model.leakageBuckle);
+			 $("#referralFee").val(model.referralFee);
+			 $("#insuranceFee").val(model.insuranceFee);
+			 $("#amerce").val(model.amerce);
+			 $("#overAllowance").val(model.overAllowance);
+			 $("#shouldPay").html(model.shouldPay);
+			 $("#incomeTax").val(model.incomeTax);
+			 $("#goodFee").html(model.goodFee);
+			 $("#advancePay").val(model.advancePay);
+			 $("#electricity").val(model.electricity);
+			 $("#realPay").html(model.realPay);	
+			 $('#wageDiv').modal('show');
+		 }
+		},
+ 	 	error:function(){
+ 	 		queryHintCallback("query_hint");
+			alert("失败！");
+		}
+	});
+}
+
+function wageEmpty(){
+	 $("#wageDate").html("");
+	 $("#riderId").html("");
+	 $("#riderName").html("");
+	 $("#errorCount").html("");
+	 $("#normalCount").html("");
+	 $("#timeoutCount").html("");
+	 $("#onTimeCount").html("");
+	 $("#subsidization").html("");
+	 $("#leakageBuckle").val("");
+	 $("#referralFee").val("");
+	 $("#insuranceFee").val("");
+	 $("#amerce").val("");
+	 $("#overAllowance").val("");
+	 $("#shouldPay").html("");
+	 $("#incomeTax").val("");
+	 $("#goodFee").html("");
+	 $("#advancePay").val("");
+	 $("#electricity").val("");
+	 $("#realPay").html("");
+}
+
+function WageConfirm(){
+	var JsonData = '{';
+	JsonData += '"id":"'+$("#riderId").html()+'",';
+	JsonData += '"errorCount":"'+$("#errorCount").html()+'",';
+	JsonData += '"normalCount":"'+$("#normalCount").html()+'",';
+	JsonData += '"timeoutCount":"'+$("#timeoutCount").html()+'",';
+	JsonData += '"onTimeCount":"'+ $("#onTimeCount").html()+'",';
+	JsonData += '"subsidization":"'+$("#subsidization").html()+'",';
+	JsonData += '"leakageBuckle":"'+$("#leakageBuckle").val()+'",';
+	JsonData += '"referralFee":"'+$("#referralFee").val()+'",';
+	JsonData += '"insuranceFee":"'+$("#insuranceFee").val()+'",';
+	JsonData += '"amerce":"'+$("#amerce").val()+'",';
+	JsonData += '"overAllowance":"'+$("#overAllowance").val()+'",';
+	JsonData += '"shouldPay":"'+$("#shouldPay").html()+'",';
+	JsonData += '"incomeTax":"'+$("#incomeTax").val()+'",';
+	JsonData += '"goodFee":"'+$("#goodFee").html()+'",';
+	JsonData += '"advancePay":"'+$("#advancePay").val()+'",';
+	JsonData += '"electricity":"'+$("#electricity").val()+'",';
+	JsonData += '"realPay":"'+$("#realPay").html()+'",';
+	JsonData += '"wageDate":"'+$("#wageDate").html()+'"';
+	JsonData += '}';
+	$.ajax({
+		type:'post',
+		url:'/pay/checkPayrollDetail.do',
+		data:{
+			"riderID":riderId,
+			},
+		dataType:"json",
+		success:function(model){ 
+			queryHintCallback("query_hint");
+		 if(model!="0"){
+		 alert("修改成功"); 
+		 }else{
+		 alert("修改失败"); 	 
+		 }
+		},
+ 	 	error:function(){
+ 	 		queryHintCallback("query_hint");
+			alert("失败！");
+		}
+	});
+
+}
+
+$("leakageBuckle").blur(function(){
+	CalWage();
+});
+$("referralFee").blur(function(){
+	CalWage();
+});
+$("insuranceFee").blur(function(){
+	CalWage();
+});
+$("amerce").blur(function(){
+	CalWage();
+});
+$("overAllowance").blur(function(){
+	CalWage();
+});
+$("incomeTax").blur(function(){
+	CalWage();
+});
+$("goodFee").blur(function(){
+	CalWage();
+});
+$("advancePay").blur(function(){
+	CalWage();
+});
+$("electricity").blur(function(){
+	CalWage();
+});
+function CalWage(){
+	try 
+	{ 
+	$("#realPay").html(parseFloat($("#subsidization").html())+parseFloat($("#leakageBuckle").val())+parseFloat($("#referralFee").val())+parseFloat($("#insuranceFee").val())+parseFloat($("#amerce").val())+parseFloat($("#overAllowance").val())+parseFloat($("#incomeTax").val())+parseFloat($("#goodFee").val())+parseFloat($("#advancePay").val())+parseFloat($("#electricity").val()));
+	} 
+	catch (e) 
+	{ 
+	 
+	}
+	
+}

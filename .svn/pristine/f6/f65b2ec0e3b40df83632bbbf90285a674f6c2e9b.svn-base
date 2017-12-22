@@ -1,0 +1,28 @@
+package com.mtr.psn.mapper.orders;
+
+import java.util.List;
+
+import com.mtr.psn.model.orders.AppealForm;
+import com.mtr.psn.model.orders.QueryAppealForm;
+
+public interface AppealFormMapper {
+
+	public AppealForm selectById(Integer id)throws Exception;
+
+	public List<AppealForm> selectAll(AppealForm appealform)throws Exception;
+
+	public List<AppealForm> selectMoneyByRider(QueryAppealForm appealform)throws Exception;
+	
+ 
+	public List<AppealForm> selectAppealFormList(QueryAppealForm appealform)throws Exception;
+	
+	public Integer Count(QueryAppealForm appealform)throws Exception;
+	
+	public int insert(AppealForm appealform)throws Exception;
+ 
+
+	public int update(AppealForm appealform)throws Exception;
+
+	public int delete(AppealForm appealform)throws Exception;
+
+}

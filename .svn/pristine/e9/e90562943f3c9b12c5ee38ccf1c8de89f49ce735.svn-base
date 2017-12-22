@@ -1,0 +1,102 @@
+package com.mtr.psn.model.orders;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.mtr.psn.model.BaseModel;
+
+public class Appealform extends BaseModel implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Date complaintDate;
+	private Integer complaintNum;
+	private String complaintType;
+	private Integer franchiseeID;
+	private Integer teamID;
+	private Integer merchantID;
+	private String orderNum;
+	private String billNum;
+	private Object complaintAmount;
+	private String reason;
+
+	public Date getComplaintDate() {
+		return complaintDate;
+	}
+
+	public void setComplaintDate(Date complaintDate) {
+		this.complaintDate = complaintDate;
+	}
+
+	public Integer getComplaintNum() {
+		return complaintNum;
+	}
+
+	public void setComplaintNum(Integer complaintNum) {
+		this.complaintNum = complaintNum;
+	}
+
+	public String getComplaintType() {
+		return complaintType;
+	}
+
+	public void setComplaintType(String complaintType) {
+		this.complaintType = complaintType;
+	}
+
+	public Integer getFranchiseeID() {
+		return franchiseeID;
+	}
+
+	public void setFranchiseeID(Integer franchiseeID) {
+		this.franchiseeID = franchiseeID;
+	}
+
+	public Integer getTeamID() {
+		return teamID;
+	}
+
+	public void setTeamID(Integer teamID) {
+		this.teamID = teamID;
+	}
+
+	public Integer getMerchantID() {
+		return merchantID;
+	}
+
+	public void setMerchantID(Integer merchantID) {
+		this.merchantID = merchantID;
+	}
+
+	public String getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	public String getBillNum() {
+		return billNum;
+	}
+
+	public void setBillNum(String billNum) {
+		this.billNum = billNum;
+	}
+
+	public Object getComplaintAmount() {
+		return complaintAmount;
+	}
+
+	public void setComplaintAmount(Object complaintAmount) {
+		this.complaintAmount = complaintAmount;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+}

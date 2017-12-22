@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.user.BankAccountMapper">
+	<select id="selectById" parameterType="Integer" resultType="BankAccount">
+		SELECT * FROM u_bank_account WHERE id=#{id} 
+	</select>
+	<select id="selectAll" parameterType="BankAccount" resultType="BankAccount">
+		SELECT * FROM u_bank_account
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="userId != null">AND userId = #{userId}
+			</if>
+			<if test="bankName != null">AND bankName = #{bankName}
+			</if>
+			<if test="bankAccount != null">AND bankAccount = #{bankAccount}
+			</if>
+			<if test="purpose != null">AND purpose = #{purpose}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="BankAccount">
+		INSERT INTO u_bank_account (id,userId,bankName,bankAccount,purpose,createBy,createTime,modifyTime,modifyBy,remarks)
+		VALUES (#{id},#{userId},#{bankName},#{bankAccount},#{purpose},#{createBy},#{createTime},#{modifyTime},#{modifyBy},#{remarks})
+	</insert>
+	<update id="update" parameterType="BankAccount">
+		UPDATE u_bank_account SET
+		userId=#{userId},bankName=#{bankName},bankAccount=#{bankAccount},purpose=#{purpose},createBy=#{createBy},createTime=#{createTime},modifyTime=#{modifyTime},modifyBy=#{modifyBy},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="BankAccount">
+		DELETE FROM u_bank_account WHERE id=#{id}
+	</delete>
+</mapper>

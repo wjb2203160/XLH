@@ -1,0 +1,75 @@
+package com.mtr.psn.model.pay;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.mtr.psn.model.BaseStringTime;
+
+public class Salary_h extends BaseStringTime implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String siteName;
+	private double basicSalary;
+	private double perfectAttendance;
+	private Integer attendanceDay;
+	private Integer orderNum;
+	private double orderPrice;
+	private Date executionDate;
+
+	public String getSiteName() {
+		return siteName;
+	}
+
+	public void setSiteName(String siteName) {
+		this.siteName = siteName;
+	}
+
+	public double getBasicSalary() {
+		return basicSalary;
+	}
+
+	public void setBasicSalary(double basicSalary) {
+		this.basicSalary = basicSalary;
+	}
+
+	public double getPerfectAttendance() {
+		return perfectAttendance;
+	}
+
+	public void setPerfectAttendance(double perfectAttendance) {
+		this.perfectAttendance = perfectAttendance;
+	}
+
+	public Integer getAttendanceDay() {
+		return attendanceDay;
+	}
+
+	public void setAttendanceDay(Integer attendanceDay) {
+		this.attendanceDay = attendanceDay;
+	}
+
+	public Integer getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	public double getOrderPrice() {
+		return orderPrice;
+	}
+
+	public void setOrderPrice(double orderPrice) {
+		this.orderPrice = orderPrice;
+	}
+
+	public Date getExecutionDate() {
+		return executionDate;
+	}
+
+	public void setExecutionDate(Date executionDate) {
+		this.executionDate = executionDate;
+	}
+
+}

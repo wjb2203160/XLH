@@ -1,0 +1,178 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/pages/common/head.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
+<div>
+	<ul class="breadcrumb">
+		<li><a href="#">后台管理</a> <span class="divider">/</span></li>
+		<li><a href="/backend/userList.htm">薪资表管理</a></li>
+	</ul>
+</div>
+<!-- 用户列表展示 -->
+<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title>
+			<h2><i class="icon-user"></i> 薪资表管理</h2>
+			<div class="box-icon" onclick="SalaryMxAdd();">
+				<span class="icon32 icon-color icon-add custom-setting adduser"  id="intoAddSalary"></span>
+			</div>
+		</div>		
+		<div class="box-content" style="overflow:auto;">
+		 	<div class="control-group">
+
+                   <label style="display:inline" class="control-label" for="teamId">站点ID</label>
+                    
+                   <input  style="display:inline;width:80px" class="focused" id="teamId" readonly type="text" value="${siteId }">
+                   
+                    <label style="display:inline" class="control-label" for="teamName">站点名称</label>
+                    
+                   <input  style="display:inline;width:80px" class="focused" id="teamName" readonly type="text" value="${siteName }">
+
+	              <button type="button" class="btn btn-primary" onclick="TeamMxQuery();">查询</button>
+	              <a class="btn btn-primary" href="/backend/salary.html?currentpage=1">返回</a>
+			  </div>
+			<table class="table table-striped table-bordered bootstrap-datatable datatable">
+				<thead>
+					<tr>
+					    <th>站点Id</th>
+						<th>单量从</th>
+						<th>单量到</th>
+						<th>单价</th>
+						<th>是否为奖励补助</th>
+						<th>奖励补助</th>
+						<th>创建时间</th>
+						<th>创建人</th>
+						<th>修改时间</th>
+						<th>修改人</th>
+						<th>备注</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:if test="${page.items != null }">
+						<c:forEach items="${page.items }" var="user">
+							<tr>
+							<td class="center">${user.siteId }</td>
+								<td class="center">${user.orderFrom }</td>
+								<td class="center">${user.orderTo }</td>
+								<td class="center">${user.price }</td> 
+								<td class="center">${user.isSubsidization }</td>
+								<td class="center">${user.subsidization }</td>
+								<td class="center">${user.createTime }</td>
+								<td class="center">${user.createBy }</td>
+								<td class="center">${user.modifyTime }</td>
+								<td class="center">${user.modifyBy }</td>
+								<td class="center">${user.remarks }</td>
+								<td class="center">
+								 	<a class="btn btn-info modifyuser" href="#"  onclick="SalaryMxDetail(${user.id });"> <i class="icon-edit icon-white"></i> 修改</a>
+								  	<a class="btn btn-danger" href="#" onclick="DeleteSalaryMxData(${user.id });"> <i class="icon-trash icon-white"></i> 删除</a>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</tbody>
+			</table>
+			<div class="pagination pagination-centered">
+				<ul>
+					<c:choose>
+						<c:when test="${page.page == 1 }">
+							<li class="active"><a href="javascript:void();" title="首页">首页</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="/backend/salaryMx.html?currentpage=${num }&siteId=${siteId }" title="首页">首页</a></li>
+						</c:otherwise>
+					</c:choose>
+					<c:if test="${page.prevPages != null }">
+						<c:forEach items="${page.prevPages }" var="num">
+							<li>
+							<a href="/backend/salaryMx.html?currentpage=${num }&siteId=${siteId }" title="${num }">${num }</a>
+							</li>
+						</c:forEach>
+					</c:if>
+					<li class="active"><a href="#" title="${page.page }">${page.page }</a></li>
+					<c:if test="${page.nextPages != null }">
+						<c:forEach items="${page.nextPages }" var="num">
+							<li>
+							<a href="/backend/salaryMx.html?currentpage=${num }&siteId=${siteId }" title="${num }">${num }</a>
+							</li>
+						</c:forEach>
+					</c:if>
+					<c:if test="${page.pageCount != null }">
+						<c:choose>
+						<c:when test="${page.page == page.pageCount }">
+							<li class="active"><a href="javascript:void();" title="尾页">尾页</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="/backend/salaryMx.html?currentpage=${num }&siteId=${siteId }" title="尾页">尾页</a></li>
+						</c:otherwise>
+					</c:choose>
+					</c:if>
+					<c:if test="${page.pageCount == null }">
+						<li class="active"><a href="javascript:void();" title="尾页">尾页</a></li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 用户列表展示end -->
+<!-- 用户信息添加 -->
+ <div class="modal hide fade" id="SalaryDiv">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3>薪资表明细</h3>
+		</div>
+		<div class="modal-body">
+			<ul id="add_formtip"></ul>
+			<ul class="topul">
+			<li>
+				<li>
+					<label>单量从:</label> 
+					<input id="orderFrom" type="text" name="orderFrom" value="" /> 
+				 
+					<span style="color: red; font-weight: bold;">*</span>
+				</li>
+				<li>
+					<label>单量到：</label> 
+						<input id="orderTo" type="text" name="orderTo" />
+						<span style="color: red; font-weight: bold;">*</span>
+				</li>
+				<li>
+					<label>单价：</label> 
+					<input id="price" type="text" name="price"  />
+						<span style="color: red; font-weight: bold;">*</span>
+				</li>
+				<li>
+				<label>备注：</label>
+					<input type="text" id="remarks"name="remarks" /> 
+					<span style="color: red; font-weight: bold;">*</span>
+				</li>
+				<li>
+					<label>是否为奖励补助：</label>  
+					<select id="isSubsidization" name="isSubsidization" style="width: 100px;" onchange="isSubsidization(this)">
+					<option value='是'>是</option>
+					<option value='否'  selected = "selected">否</option>
+					</select>
+						<span style="color: red; font-weight: bold;">*</span>
+				</li>
+				
+				<li id ="subs" style="display:none"><label>奖励补助：</label> 
+					<input id="subsidization" type="text"  name="subsidization" value="" />
+						 
+					 <span style="color: red; font-weight: bold;">*</span>
+				</li>
+				 <input  style="display:none" id="detailId" type="text"  name="detailId" value="" />
+				
+				
+			</ul>
+			</div>
+		<div class="modal-footer">
+			<a href="#" class="btn addusercancel" data-dismiss="modal" >取消</a>
+			<a href="#" class="btn addusercancel"  onclick="SalaryMxConfirm();">保存</a>
+		</div>
+	 
+</div>
+
+<%@include file="/WEB-INF/pages/common/foot.jsp" %>
+<script src="/statics/localjs/salaryMx.js"></script>
+<script   src="/statics/medire/WdatePicker.js"></script>

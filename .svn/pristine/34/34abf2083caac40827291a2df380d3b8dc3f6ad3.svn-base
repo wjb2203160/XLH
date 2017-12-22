@@ -1,0 +1,18 @@
+package com.mtr.psn.service.orders;
+
+import java.util.List;
+import com.mtr.psn.model.orders.ComplaintForm;
+
+public interface ComplaintFormService {
+
+	public ComplaintForm selectById(Integer id)throws Exception;
+
+	public List<ComplaintForm> selectAll(ComplaintForm complaintForm)throws Exception;
+
+	public int psn_insert(ComplaintForm complaintForm)throws Exception;
+
+	public int psn_update(ComplaintForm complaintForm)throws Exception;
+
+	public int psn_delete(ComplaintForm complaintForm)throws Exception;
+
+}

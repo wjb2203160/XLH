@@ -1,0 +1,101 @@
+package com.mtr.psn.model.member;
+
+import java.io.Serializable;
+
+import com.mtr.psn.model.BaseStringTime;
+
+public class Franchisee extends BaseStringTime implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String franchiseeName;
+	private String licence;
+	private String phone;
+	private String country;
+	private String province;
+	private String city;
+	private String county;
+	private String address;
+	private String legalPerson;
+	private Integer legalUserId;
+
+	public String getFranchiseeName() {
+		return franchiseeName;
+	}
+
+	public void setFranchiseeName(String franchiseeName) {
+		this.franchiseeName = franchiseeName;
+	}
+
+	public String getLicence() {
+		return licence;
+	}
+
+	public void setLicence(String licence) {
+		this.licence = licence;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCounty() {
+		return county;
+	}
+
+	public void setCounty(String county) {
+		this.county = county;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getLegalPerson() {
+		return legalPerson;
+	}
+
+	public void setLegalPerson(String legalPerson) {
+		this.legalPerson = legalPerson;
+	}
+
+	public Integer getLegalUserId() {
+		return legalUserId;
+	}
+
+	public void setLegalUserId(Integer legalUserId) {
+		this.legalUserId = legalUserId;
+	}
+
+}

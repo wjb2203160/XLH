@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.other.DataDictionaryMapper">
+	<select id="getDataDictionaries" parameterType="dataDictionary" resultType="dataDictionary">
+		select * from data_dictionary
+		<trim prefix="where" prefixOverrides="and / or">
+			<if test="typeCode != null">
+				typeCode = #{typeCode}
+			</if>
+		</trim>
+		order by valueId asc
+	</select>
+	<select id="selectById" parameterType="Long" resultType="DataDictionary">
+		SELECT * FROM data_dictionary WHERE id=#{id} 
+	</select>
+	<select id="selectAll" parameterType="DataDictionary" resultType="DataDictionary">
+		SELECT * FROM data_dictionary
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="typeCode != null">AND typeCode = #{typeCode}
+			</if>
+			<if test="typeName != null">AND typeName = #{typeName}
+			</if>
+			<if test="valueId != null">AND valueId = #{valueId}
+			</if>
+			<if test="valueName != null">AND valueName = #{valueName}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="DataDictionary">
+		INSERT INTO data_dictionary (id,typeCode,typeName,valueId,valueName)
+		VALUES (#{id},#{typeCode},#{typeName},#{valueId},#{valueName})
+	</insert>
+	<update id="update" parameterType="DataDictionary">
+		UPDATE data_dictionary SET
+		typeCode=#{typeCode},typeName=#{typeName},valueId=#{valueId},valueName=#{valueName}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="DataDictionary">
+		DELETE FROM data_dictionary WHERE id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.goods.GoodsRegistrationFormMapper">
+	<select id="selectById" parameterType="Integer" resultType="GoodsRegistrationForm">
+		SELECT * FROM mtr_goods_registration_form WHERE id=#{id} 
+	</select>
+   <!-- 通过骑手ID获取申领表 -->
+	<select id="selectClaimantBy" parameterType="QueryRegistrationForm" resultType="GoodsRegistrationForm">
+		SELECT mgr.*,gf.price FROM mtr_goods_registration_form as mgr 
+		LEFT JOIN mtr_goods gf on mgr.goodsId = gf.id
+		<where>
+		<if test="orderForm != null">AND mgr.claimantTime &gt;= #{orderForm}
+			</if>
+			<if test="orderTo != null">AND mgr.claimantTime  &lt; #{orderTo}
+			</if>
+			<if test="riderID != null">AND mgr.claimantBy = #{riderID}
+			</if>
+		</where>
+		 
+	</select>
+	
+	<select id="count" parameterType="GoodsRegistrationForm" resultType="int">
+		SELECT count(1) FROM mtr_goods_registration_form  rf
+		LEFT JOIN mtr_goods_form gf on rf.goodsId = gf.id
+		<where>
+			<if test="goodsName != null">AND gf.goodsName like CONCAT('%',#{goodsName},'%')
+			</if>
+			<if test="goodsId != null">AND rf.goodsId = #{goodsId})
+			</if>
+			<if test="claimantName != null">AND rf.claimantName like CONCAT('%',#{claimantName},'%')
+			</if>
+			<if test="claimantPhone != null">AND rf.claimantPhone like CONCAT('%',#{claimantPhone},'%')
+			</if>
+			<if test="dep != null">AND rf.dep = #{dep}
+			</if>
+			<if test="claimantSite != null">AND rf.claimantSite like CONCAT('%',#{claimantSite},'%')
+			</if>
+			<if test="handledBy != null">AND rf.handledBy = #{handledBy}
+			</if>
+		</where>
+	</select>
+	<select id="getPagesList" parameterType="GoodsRegistrationForm" resultType="GoodsRegistrationFormEntiy">
+		SELECT gf.goodsType,gf.goodsName,gf.price,rf.* FROM mtr_goods_registration_form  rf
+		LEFT JOIN mtr_goods_form gf on rf.goodsId = gf.id
+		<where>
+			<if test="goodsName != null">AND gf.goodsName like CONCAT('%',#{goodsName},'%')
+			</if>
+			<if test="goodsId != null">AND rf.goodsId = #{goodsId})
+			</if>
+			<if test="claimantName != null">AND rf.claimantName like CONCAT('%',#{claimantName},'%')
+			</if>
+			<if test="claimantPhone != null">AND rf.claimantPhone like CONCAT('%',#{claimantPhone},'%')
+			</if>
+			<if test="dep != null">AND rf.dep = #{dep}
+			</if>
+			<if test="claimantSite != null">AND rf.claimantSite like CONCAT('%',#{claimantSite},'%')
+			</if>
+			<if test="handledBy != null">AND rf.handledBy = #{handledBy}
+			</if>
+		</where>
+		order by createTime desc limit #{starNum},#{pageSize}
+	</select>
+	<select id="selectAll" parameterType="GoodsRegistrationForm" resultType="GoodsRegistrationForm">
+		SELECT * FROM mtr_goods_registration_form
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="goodsId != null">AND goodsId = #{goodsId}
+			</if>
+			<if test="claimantCount != null">AND claimantCount = #{claimantCount}
+			</if>
+			<if test="claimantBy != null">AND claimantBy = #{claimantBy}
+			</if>
+			<if test="claimantName != null">AND claimantName = #{claimantName}
+			</if>
+			<if test="claimantPhone != null">AND claimantPhone = #{claimantPhone}
+			</if>
+			<if test="dep != null">AND dep = #{dep}
+			</if>
+			<if test="claimantTime != null">AND claimantTime = #{claimantTime}
+			</if>
+			<if test="claimantSite != null">AND claimantSite = #{claimantSite}
+			</if>
+			<if test="handledBy != null">AND handledBy = #{handledBy}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="GoodsRegistrationForm">
+		INSERT INTO mtr_goods_registration_form 
+		(id,goodsId,claimantCount,claimantBy,claimantName,claimantPhone,dep,claimantTime,
+			claimantSite,handledBy,createBy,createTime,modifyBy,modifyTime,remarks)
+		VALUES 
+		(#{id},#{goodsId},#{claimantCount},#{claimantBy},#{claimantName},#{claimantPhone},
+			#{dep},#{claimantTime},#{claimantSite},#{handledBy},#{createBy},#{createTime},#{modifyBy},
+			#{modifyTime},#{remarks})
+	</insert>
+	<update id="update" parameterType="GoodsRegistrationForm">
+		UPDATE mtr_goods_registration_form SET
+			goodsId=#{goodsId},claimantCount=#{claimantCount},claimantBy=#{claimantBy},
+			claimantName=#{claimantName},claimantPhone=#{claimantPhone},dep=#{dep},
+			claimantTime=#{claimantTime},claimantSite=#{claimantSite},handledBy=#{handledBy},
+			createBy=#{createBy},createTime=#{createTime},modifyBy=#{modifyBy},modifyTime=#{modifyTime},
+			remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="GoodsRegistrationForm">
+		DELETE FROM mtr_goods_registration_form WHERE id=#{id}
+	</delete>
+</mapper>

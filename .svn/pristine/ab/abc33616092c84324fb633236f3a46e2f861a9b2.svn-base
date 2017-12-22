@@ -1,0 +1,38 @@
+//页面加载完成之后去掉Loading
+$(document).ready(function(){
+    queryHintCallback("query_hint");
+});
+
+/**
+ * @description  * 显示查询等待层
+ * @param query_hint
+ */
+function show_query_hint(query_hint){
+    var query_hint = document.getElementById(query_hint);
+    query_hint.style.display="block";
+    document.getElementById('myModel').style.display = 'block';
+}
+
+/**
+ * @description 查询结果回调函数
+ * @param query_hint 要隐藏的提示层id
+ */
+function queryHintCallback(query_hint){
+    var query_hint = document.getElementById(query_hint);
+    query_hint.style.display="none";
+}
+
+function Query(){
+	show_query_hint("query_hint");
+	$.ajax({
+		type:'get',
+		url:'/pay/checkPayroll.do?currentpage=1&orderFrom='+$("#date01").val()+'&orderTo='+$("#date02").val()+'&riderID='+$("#riderId").val(),
+		success:function(model){ 
+			document.write(model);
+			document.close();
+		},
+ 	 	error:function(){
+			alert("失败！");
+		}
+	});
+}

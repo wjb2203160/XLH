@@ -1,0 +1,61 @@
+package com.mtr.psn.service.user;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import com.mtr.psn.mapper.user.UserMapper;
+import com.mtr.psn.model.user.User;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Resource
+	private UserMapper userMapper;
+
+	@Override
+	public User selectById(Integer id)throws Exception{
+		return	userMapper.selectById(id);
+	}
+	@Override
+	public List<User> selectAll(User user)throws Exception{
+		return	userMapper.selectAll(user);
+	}
+	@Override
+	public int psn_insert(User user)throws Exception{
+		return	userMapper.insert(user);
+	}
+	@Override
+	public int psn_update(User user)throws Exception{
+		return	userMapper.update(user);
+	}
+	@Override
+	public int psn_delete(User user)throws Exception{
+		return	userMapper.delete(user);
+	}
+	@Override
+	public User selectByPhone(String cellphone) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.selectByPhone(cellphone);
+	}
+	@Override
+	public User selectUser(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.selectUser(user);
+	}
+	@Override
+	public int count(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.count(user);
+	}
+	@Override
+	public List<User> getUserList(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.getUserList(user);
+	}
+	@Override
+	public int delUserPic(User user) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.delete(user);
+	}
+}

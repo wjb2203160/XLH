@@ -1,0 +1,66 @@
+package com.mtr.psn.model.pay;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.mtr.psn.model.BaseModel;
+
+public class Salary_d extends BaseModel implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Integer siteId;
+	private Integer orderFrom;
+	private Integer orderTo;
+	private Object price;
+	private String isSubsidization;
+	private Object subsidization;
+
+	public Integer getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Integer siteId) {
+		this.siteId = siteId;
+	}
+
+	public Integer getOrderFrom() {
+		return orderFrom;
+	}
+
+	public void setOrderFrom(Integer orderFrom) {
+		this.orderFrom = orderFrom;
+	}
+
+	public Integer getOrderTo() {
+		return orderTo;
+	}
+
+	public void setOrderTo(Integer orderTo) {
+		this.orderTo = orderTo;
+	}
+
+	public Object getPrice() {
+		return price;
+	}
+
+	public void setPrice(Object price) {
+		this.price = price;
+	}
+
+	public String getIsSubsidization() {
+		return isSubsidization;
+	}
+
+	public void setIsSubsidization(String isSubsidization) {
+		this.isSubsidization = isSubsidization;
+	}
+
+	public Object getSubsidization() {
+		return subsidization;
+	}
+
+	public void setSubsidization(Object subsidization) {
+		this.subsidization = subsidization;
+	}
+
+}

@@ -1,0 +1,73 @@
+package com.mtr.psn.model.member;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Merchant implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Integer merchantID;
+	private String merchantName;
+	private Date createTime;
+	private Integer createBy;
+	private Date modifyTime;
+	private Integer modifyBy;
+	private String remarks;
+
+	public Integer getMerchantID() {
+		return merchantID;
+	}
+
+	public void setMerchantID(Integer merchantID) {
+		this.merchantID = merchantID;
+	}
+
+	public String getMerchantName() {
+		return merchantName;
+	}
+
+	public void setMerchantName(String merchantName) {
+		this.merchantName = merchantName;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public Integer getModifyBy() {
+		return modifyBy;
+	}
+
+	public void setModifyBy(Integer modifyBy) {
+		this.modifyBy = modifyBy;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+}

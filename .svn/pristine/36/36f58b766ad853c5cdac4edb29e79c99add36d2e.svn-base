@@ -1,0 +1,23 @@
+package com.mtr.psn.mapper.pay;
+
+import java.util.List;
+
+import com.mtr.psn.model.pay.QueryWage;
+import com.mtr.psn.model.pay.Wage;
+
+public interface WageMapper {
+
+	public Wage selectById(Long id)throws Exception;
+
+	public List<Wage> selectAll(Wage wage)throws Exception;
+
+	public int insert(Wage wage)throws Exception;
+
+	public int update(Wage wage)throws Exception;
+
+	public int delete(Wage wage)throws Exception;
+
+	public int CountByRider(QueryWage wage)throws Exception;
+	
+	public List<Wage> selectWageList(QueryWage wage)throws Exception;
+}

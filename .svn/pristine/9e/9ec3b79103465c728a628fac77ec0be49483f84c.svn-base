@@ -1,0 +1,82 @@
+package com.mtr.psn.model.member;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Rider implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Integer riderID;
+	private String riderName;
+	private Date createTime;
+	private Integer createBy;
+	private Date modifyTime;
+	private Integer modifyBy;
+	private String remarks;
+	private Integer id;
+
+	public Integer getRiderID() {
+		return riderID;
+	}
+
+	public void setRiderID(Integer riderID) {
+		this.riderID = riderID;
+	}
+
+	public String getRiderName() {
+		return riderName;
+	}
+
+	public void setRiderName(String riderName) {
+		this.riderName = riderName;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public Integer getModifyBy() {
+		return modifyBy;
+	}
+
+	public void setModifyBy(Integer modifyBy) {
+		this.modifyBy = modifyBy;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+}

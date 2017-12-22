@@ -1,0 +1,15 @@
+/*隐藏域取值*/
+//获取会员类型名称
+$("#selectusertype").change(function(){
+	$("#seletusertypevname").val($("#selectusertype").find("option:selected").text());
+});
+//获取角色名
+$("#selectrole").change(function(){
+	$("#selectrolename").val($("#selectrole").find("option:selected").text());
+});
+//添加弹出添加主面板
+$(".addregistrationform").click(function(e){
+	$("#add_formtip").html('');
+	e.preventDefault();
+	$('#addRegistrationFormDiv').modal('show');
+})

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.pay.Salary_dMapper">
+	<select id="selectById" parameterType="Long" resultType="Salary_d">
+		SELECT * FROM salary_d WHERE id=#{id} 
+	</select>
+	
+	<!-- 获取数量-->
+	<select id="Count" parameterType="Salary_d" resultType="int">
+		SELECT  COUNT(id) FROM salary_d 
+		<where>
+			<if test="siteId != null">AND siteId = #{siteId}
+			</if>
+		</where>
+	</select>
+	
+ 
+	<select id="selectAll" parameterType="Salary_d" resultType="Salary_d">
+		SELECT * FROM salary_d
+		<where>
+			<if test="siteId != null">AND siteId = #{siteId}
+			</if>
+			<if test="orderFrom != null">AND orderFrom = #{orderFrom}
+			</if>
+			<if test="orderTo != null">AND orderTo = #{orderTo}
+			</if>
+			<if test="price != null">AND price = #{price}
+			</if>
+			<if test="isSubsidization != null">AND isSubsidization = #{isSubsidization}
+			</if>
+			<if test="subsidization != null">AND subsidization = #{subsidization}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+			<if test="id != null">AND id = #{id}
+			</if>
+		</where>
+	order by orderTo asc limit #{starNum},#{pageSize};
+	</select>
+	<insert id="insert" parameterType="Salary_d">
+		INSERT INTO salary_d (siteId,orderFrom,orderTo,price,isSubsidization,subsidization,createTime,createBy,modifyTime,modifyBy,remarks,id)
+		VALUES (#{siteId},#{orderFrom},#{orderTo},#{price},#{isSubsidization},#{subsidization},#{createTime},#{createBy},#{modifyTime},#{modifyBy},#{remarks},#{id})
+	</insert>
+	<update id="update" parameterType="Salary_d">
+		UPDATE salary_d SET 
+		<if test="orderFrom != null">orderFrom = #{orderFrom},
+			</if>
+			<if test="orderTo != null">orderTo = #{orderTo},
+			</if>
+			<if test="price != null">price = #{price},
+			</if>
+			<if test="isSubsidization != null">isSubsidization = #{isSubsidization},
+			</if>
+			<if test="subsidization != null">subsidization = #{subsidization},
+			</if>
+			<if test="createBy != null">createBy = #{createBy},
+			</if>
+			<if test="modifyTime != null">modifyTime = #{modifyTime},
+			</if>
+			<if test="modifyBy != null">modifyBy = #{modifyBy},
+			</if>
+			<if test="remarks != null">remarks = #{remarks},
+			</if>
+			<if test="id != null">id = #{id}
+			</if>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="Salary_d">
+		DELETE FROM salary_d
+		<where>
+			<if test="siteId != null">AND siteId = #{siteId}
+			</if>
+				<if test="id != null">AND id = #{id}
+			</if>
+			</where>
+	</delete>
+</mapper>

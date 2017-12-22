@@ -1,0 +1,87 @@
+package com.mtr.psn.common;
+import org.apache.commons.lang.StringUtils;
+
+/**
+ * 检测空值
+ * @author lingd
+ *
+ */
+public class ControllerCheckNull {
+
+	/**
+	 * 检测用户属性
+	 * @param userName
+	 * @param phone
+	 * @param province
+	 * @param city
+	 * @param district
+	 * @param address
+	 * @return
+	 */
+	public String checkUser(String userName, String phone, String province,
+			String city, String district,String address) {
+		if (StringUtils.isEmpty(phone)) {
+			return "电话号码不能为空";
+		}
+		if (StringUtils.isEmpty(province)) {
+			return "省份不能为空";
+		}
+		if (StringUtils.isEmpty(city)) {
+			return "城市不能为空";
+		}
+		if (StringUtils.isEmpty(district)) {
+			return "地区不能为空";
+		}
+		if (StringUtils.isEmpty(address)) {
+			return "详细地址不能为空";
+		}
+		if (StringUtils.isEmpty(userName)) {
+			return "用户名为空";
+		}
+		return null;
+	}
+	
+	public String checkCellPhone(String brand, String modelNumber) {
+		if (StringUtils.isEmpty(brand)) {
+			return "手机品牌不能为空";
+		}
+		if (StringUtils.isEmpty(modelNumber)) {
+			return "型号不能为空";
+		}
+		return null;
+	}
+	
+	public String checkCellColor(String color) {
+		if (StringUtils.isEmpty(color)) {
+			return "手机颜色不能为空";
+		}
+		return null;
+	}
+	
+	public String checkMalfunction(String proplem, String malfunction) {
+		if (StringUtils.isEmpty(proplem)) {
+			return "手机故障问题不能为空";
+		}
+		if (StringUtils.isEmpty(malfunction)) {
+			return "故障详情不能为空";
+		}
+		return null;
+	}
+	
+	public String checkAddOrderForm(String brand, String modelNumber, String colorId, String proplem) {
+		
+		if (StringUtils.isEmpty(brand)) {
+			return "手机品牌不能为空";
+		}
+		if (StringUtils.isEmpty(modelNumber)) {
+			return "型号不能为空";
+		}
+		if (StringUtils.isEmpty(colorId)) {
+			return "手机颜色不能为空";
+		}
+		if (StringUtils.isEmpty(proplem)) {
+			return "手机故障问题不能为空";
+		}
+		return null;
+	}
+}

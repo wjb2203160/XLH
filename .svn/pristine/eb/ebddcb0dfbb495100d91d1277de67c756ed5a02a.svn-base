@@ -1,0 +1,127 @@
+package com.mtr.psn.model.pay;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Salary_h implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String siteName;
+	private Object basicSalary;
+	private Object perfectAttendance;
+	private Integer attendanceDay;
+	private Integer orderNum;
+	private Object orderPrice;
+	private Date executionDate;
+	private Date createTime;
+	private Integer createBy;
+	private Date modifyTime;
+	private Integer modifyBy;
+	private String remarks;
+	private Integer siteId;
+
+	public String getSiteName() {
+		return siteName;
+	}
+
+	public void setSiteName(String siteName) {
+		this.siteName = siteName;
+	}
+
+	public Object getBasicSalary() {
+		return basicSalary;
+	}
+
+	public void setBasicSalary(Object basicSalary) {
+		this.basicSalary = basicSalary;
+	}
+
+	public Object getPerfectAttendance() {
+		return perfectAttendance;
+	}
+
+	public void setPerfectAttendance(Object perfectAttendance) {
+		this.perfectAttendance = perfectAttendance;
+	}
+
+	public Integer getAttendanceDay() {
+		return attendanceDay;
+	}
+
+	public void setAttendanceDay(Integer attendanceDay) {
+		this.attendanceDay = attendanceDay;
+	}
+
+	public Integer getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	public Object getOrderPrice() {
+		return orderPrice;
+	}
+
+	public void setOrderPrice(Object orderPrice) {
+		this.orderPrice = orderPrice;
+	}
+
+	public Date getExecutionDate() {
+		return executionDate;
+	}
+
+	public void setExecutionDate(Date executionDate) {
+		this.executionDate = executionDate;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public Integer getModifyBy() {
+		return modifyBy;
+	}
+
+	public void setModifyBy(Integer modifyBy) {
+		this.modifyBy = modifyBy;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public Integer getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Integer siteId) {
+		this.siteId = siteId;
+	}
+
+}

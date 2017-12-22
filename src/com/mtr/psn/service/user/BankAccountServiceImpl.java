@@ -1,0 +1,36 @@
+package com.mtr.psn.service.user;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import com.mtr.psn.mapper.user.BankAccountMapper;
+import com.mtr.psn.model.user.BankAccount;
+
+@Service
+public class BankAccountServiceImpl implements BankAccountService {
+
+	@Resource
+	private BankAccountMapper bankAccountMapper;
+
+	@Override
+	public BankAccount selectById(Long id)throws Exception{
+		return	bankAccountMapper.selectById(id);
+	}
+	@Override
+	public List<BankAccount> selectAll(BankAccount bankAccount)throws Exception{
+		return	bankAccountMapper.selectAll(bankAccount);
+	}
+	@Override
+	public int psn_insert(BankAccount bankAccount)throws Exception{
+		return	bankAccountMapper.insert(bankAccount);
+	}
+	@Override
+	public int psn_update(BankAccount bankAccount)throws Exception{
+		return	bankAccountMapper.update(bankAccount);
+	}
+	@Override
+	public int psn_delete(BankAccount bankAccount)throws Exception{
+		return	bankAccountMapper.delete(bankAccount);
+	}
+}

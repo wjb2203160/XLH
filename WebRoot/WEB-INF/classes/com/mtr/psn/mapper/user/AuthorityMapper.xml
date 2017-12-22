@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.user.AuthorityMapper">
+	<select id="selectById" parameterType="Long" resultType="Authority">
+		SELECT * FROM u_authority WHERE id=#{id} 
+	</select>
+	<select id="selectAll" parameterType="Authority" resultType="Authority">
+		SELECT * FROM u_authority
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="roleId != null">AND roleId = #{roleId}
+			</if>
+			<if test="functionId != null">AND functionId = #{functionId}
+			</if>
+			<if test="userTypeId != null">AND userTypeId = #{userTypeId}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="Authority">
+		INSERT INTO u_authority (id,roleId,functionId,userTypeId,createTime,createBy,remarks)
+		VALUES (#{id},#{roleId},#{functionId},#{userTypeId},#{createTime},#{createBy},#{remarks})
+	</insert>
+	<update id="update" parameterType="Authority">
+		UPDATE u_authority SET
+		roleId=#{roleId},functionId=#{functionId},userTypeId=#{userTypeId},createTime=#{createTime},createBy=#{createBy},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="Authority">
+		DELETE FROM u_authority WHERE id=#{id}
+	</delete>
+</mapper>

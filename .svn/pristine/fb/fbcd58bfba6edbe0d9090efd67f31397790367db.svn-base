@@ -1,0 +1,175 @@
+package com.mtr.psn.model.pay;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.mtr.psn.model.BaseStringTime;
+
+public class Wage extends BaseStringTime implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Long jopNumber;
+	private Integer errorCount;
+	private Integer normalCount;
+	private Integer timeoutCount;
+	private Integer onTimeCount;
+	private double subsidization;
+	private double leakageBuckle;
+	private double referralFee;
+	private double insuranceFee;
+	private double amerce;
+	private double overAllowance;
+	private double shouldPay;
+	private double incomeTax;
+	private double goodFee;
+	private double advancePay;
+	private double electricity;
+	private double realPay;
+	private String wageDate;
+
+
+	public Long getJopNumber() {
+		return jopNumber;
+	}
+
+	public void setJopNumber(Long jopNumber) {
+		this.jopNumber = jopNumber;
+	}
+
+	public Integer getErrorCount() {
+		return errorCount;
+	}
+
+	public void setErrorCount(Integer errorCount) {
+		this.errorCount = errorCount;
+	}
+
+	public Integer getNormalCount() {
+		return normalCount;
+	}
+
+	public void setNormalCount(Integer normalCount) {
+		this.normalCount = normalCount;
+	}
+
+	public Integer getTimeoutCount() {
+		return timeoutCount;
+	}
+
+	public void setTimeoutCount(Integer timeoutCount) {
+		this.timeoutCount = timeoutCount;
+	}
+
+	public Integer getOnTimeCount() {
+		return onTimeCount;
+	}
+
+	public void setOnTimeCount(Integer onTimeCount) {
+		this.onTimeCount = onTimeCount;
+	}
+
+	public double getSubsidization() {
+		return subsidization;
+	}
+
+	public void setSubsidization(double subsidization) {
+		this.subsidization = subsidization;
+	}
+
+	public double getLeakageBuckle() {
+		return leakageBuckle;
+	}
+
+	public void setLeakageBuckle(double leakageBuckle) {
+		this.leakageBuckle = leakageBuckle;
+	}
+
+	public double getReferralFee() {
+		return referralFee;
+	}
+
+	public void setReferralFee(double referralFee) {
+		this.referralFee = referralFee;
+	}
+
+	public double getInsuranceFee() {
+		return insuranceFee;
+	}
+
+	public void setInsuranceFee(double insuranceFee) {
+		this.insuranceFee = insuranceFee;
+	}
+
+	public double getAmerce() {
+		return amerce;
+	}
+
+	public void setAmerce(double amerce) {
+		this.amerce = amerce;
+	}
+
+	public double getOverAllowance() {
+		return overAllowance;
+	}
+
+	public void setOverAllowance(double overAllowance) {
+		this.overAllowance = overAllowance;
+	}
+
+	public double getShouldPay() {
+		return shouldPay;
+	}
+
+	public void setShouldPay(double shouldPay) {
+		this.shouldPay = shouldPay;
+	}
+
+	public double getIncomeTax() {
+		return incomeTax;
+	}
+
+	public void setIncomeTax(double incomeTax) {
+		this.incomeTax = incomeTax;
+	}
+
+	public double getGoodFee() {
+		return goodFee;
+	}
+
+	public void setGoodFee(double goodFee) {
+		this.goodFee = goodFee;
+	}
+
+	public double getAdvancePay() {
+		return advancePay;
+	}
+
+	public void setAdvancePay(double advancePay) {
+		this.advancePay = advancePay;
+	}
+
+	public double getElectricity() {
+		return electricity;
+	}
+
+	public void setElectricity(double electricity) {
+		this.electricity = electricity;
+	}
+
+	public double getRealPay() {
+		return realPay;
+	}
+
+	public void setRealPay(double realPay) {
+		this.realPay = realPay;
+	}
+
+	public String getWageDate() {
+		return wageDate;
+	}
+
+	public void setWageDate(String wageDate) {
+		this.wageDate = wageDate;
+	}
+
+}

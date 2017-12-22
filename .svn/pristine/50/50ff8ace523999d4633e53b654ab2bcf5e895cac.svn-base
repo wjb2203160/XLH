@@ -1,0 +1,208 @@
+package com.mtr.psn.model.pay;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Wage implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Integer riderId;
+	private Integer errorCount;
+	private Integer normalCount;
+	private Integer timeoutCount;
+	private Integer onTimeCount;
+	private Object subsidization;
+	private Object leakageBuckle;
+	private Object referralFee;
+	private Object insuranceFee;
+	private Object amerce;
+	private Object overAllowance;
+	private Object shouldPay;
+	private Object incomeTax;
+	private Object advancePay;
+	private Object electricity;
+	private Object realPay;
+	private String createTime;
+	private Integer createName;
+	private String modifyTime;
+	private Integer modifyName;
+	private String remark;
+	private String wageDate;
+
+	public Integer getRiderId() {
+		return riderId;
+	}
+
+	public void setRiderId(Integer riderId) {
+		this.riderId = riderId;
+	}
+
+	public Integer getErrorCount() {
+		return errorCount;
+	}
+
+	public void setErrorCount(Integer errorCount) {
+		this.errorCount = errorCount;
+	}
+
+	public Integer getNormalCount() {
+		return normalCount;
+	}
+
+	public void setNormalCount(Integer normalCount) {
+		this.normalCount = normalCount;
+	}
+
+	public Integer getTimeoutCount() {
+		return timeoutCount;
+	}
+
+	public void setTimeoutCount(Integer timeoutCount) {
+		this.timeoutCount = timeoutCount;
+	}
+
+	public Integer getOnTimeCount() {
+		return onTimeCount;
+	}
+
+	public void setOnTimeCount(Integer onTimeCount) {
+		this.onTimeCount = onTimeCount;
+	}
+
+	public Object getSubsidization() {
+		return subsidization;
+	}
+
+	public void setSubsidization(Object subsidization) {
+		this.subsidization = subsidization;
+	}
+
+	public Object getLeakageBuckle() {
+		return leakageBuckle;
+	}
+
+	public void setLeakageBuckle(Object leakageBuckle) {
+		this.leakageBuckle = leakageBuckle;
+	}
+
+	public Object getReferralFee() {
+		return referralFee;
+	}
+
+	public void setReferralFee(Object referralFee) {
+		this.referralFee = referralFee;
+	}
+
+	public Object getInsuranceFee() {
+		return insuranceFee;
+	}
+
+	public void setInsuranceFee(Object insuranceFee) {
+		this.insuranceFee = insuranceFee;
+	}
+
+	public Object getAmerce() {
+		return amerce;
+	}
+
+	public void setAmerce(Object amerce) {
+		this.amerce = amerce;
+	}
+
+	public Object getOverAllowance() {
+		return overAllowance;
+	}
+
+	public void setOverAllowance(Object overAllowance) {
+		this.overAllowance = overAllowance;
+	}
+
+	public Object getShouldPay() {
+		return shouldPay;
+	}
+
+	public void setShouldPay(Object shouldPay) {
+		this.shouldPay = shouldPay;
+	}
+
+	public Object getIncomeTax() {
+		return incomeTax;
+	}
+
+	public void setIncomeTax(Object incomeTax) {
+		this.incomeTax = incomeTax;
+	}
+
+	public Object getAdvancePay() {
+		return advancePay;
+	}
+
+	public void setAdvancePay(Object advancePay) {
+		this.advancePay = advancePay;
+	}
+
+	public Object getElectricity() {
+		return electricity;
+	}
+
+	public void setElectricity(Object electricity) {
+		this.electricity = electricity;
+	}
+
+	public Object getRealPay() {
+		return realPay;
+	}
+
+	public void setRealPay(Object realPay) {
+		this.realPay = realPay;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getCreateName() {
+		return createName;
+	}
+
+	public void setCreateName(Integer createName) {
+		this.createName = createName;
+	}
+
+	public String getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(String modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public Integer getModifyName() {
+		return modifyName;
+	}
+
+	public void setModifyName(Integer modifyName) {
+		this.modifyName = modifyName;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getWageDate() {
+		return wageDate;
+	}
+
+	public void setWageDate(String wageDate) {
+		this.wageDate = wageDate;
+	}
+
+}

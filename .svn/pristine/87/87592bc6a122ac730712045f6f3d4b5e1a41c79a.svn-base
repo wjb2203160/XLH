@@ -1,0 +1,109 @@
+package com.mtr.psn.model.orders;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class AppealForm implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Date complaintDate;
+	private Integer complaintNum;
+	private String complaintType;
+	private Integer franchiseeID;
+	private Integer teamID;
+	private Integer merchantID;
+	private Integer id;
+	private String billNum;
+	private Object complaintAmount;
+	private String reason;
+	private String remarks;
+
+	public Date getComplaintDate() {
+		return complaintDate;
+	}
+
+	public void setComplaintDate(Date complaintDate) {
+		this.complaintDate = complaintDate;
+	}
+
+	public Integer getComplaintNum() {
+		return complaintNum;
+	}
+
+	public void setComplaintNum(Integer complaintNum) {
+		this.complaintNum = complaintNum;
+	}
+
+	public String getComplaintType() {
+		return complaintType;
+	}
+
+	public void setComplaintType(String complaintType) {
+		this.complaintType = complaintType;
+	}
+
+	public Integer getFranchiseeID() {
+		return franchiseeID;
+	}
+
+	public void setFranchiseeID(Integer franchiseeID) {
+		this.franchiseeID = franchiseeID;
+	}
+
+	public Integer getTeamID() {
+		return teamID;
+	}
+
+	public void setTeamID(Integer teamID) {
+		this.teamID = teamID;
+	}
+
+	public Integer getMerchantID() {
+		return merchantID;
+	}
+
+	public void setMerchantID(Integer merchantID) {
+		this.merchantID = merchantID;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getBillNum() {
+		return billNum;
+	}
+
+	public void setBillNum(String billNum) {
+		this.billNum = billNum;
+	}
+
+	public Object getComplaintAmount() {
+		return complaintAmount;
+	}
+
+	public void setComplaintAmount(Object complaintAmount) {
+		this.complaintAmount = complaintAmount;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+}

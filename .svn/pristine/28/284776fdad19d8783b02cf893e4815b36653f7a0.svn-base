@@ -1,0 +1,58 @@
+package com.mtr.psn.model.user;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.mtr.psn.model.BaseModel;
+
+public class Function extends BaseModel implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String functionCode;
+	private String functionName;
+	private String funcUrl;
+	private Integer parentId;
+	private Integer roleId;//角色id
+
+	
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getFunctionCode() {
+		return functionCode;
+	}
+
+	public void setFunctionCode(String functionCode) {
+		this.functionCode = functionCode;
+	}
+
+	public String getFunctionName() {
+		return functionName;
+	}
+
+	public void setFunctionName(String functionName) {
+		this.functionName = functionName;
+	}
+
+	public String getFuncUrl() {
+		return funcUrl;
+	}
+
+	public void setFuncUrl(String funcUrl) {
+		this.funcUrl = funcUrl;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+}

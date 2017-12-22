@@ -1,0 +1,125 @@
+package com.mtr.psn.controller.goods;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mtr.psn.common.Constants;
+import com.mtr.psn.common.PageSupport;
+import com.mtr.psn.common.SQLTools;
+import com.mtr.psn.controller.BaseController;
+import com.mtr.psn.model.goods.GoodsForm;
+import com.mtr.psn.model.other.DataDictionary;
+import com.mtr.psn.model.webEntity.GoodsFormEntity;
+import com.mtr.psn.service.goods.GoodsFormService;
+import com.mtr.psn.service.other.DataDictionaryService;
+import com.mysql.jdbc.StringUtils;
+
+@Controller
+public class GoodsFormController extends BaseController {
+
+	@Resource
+	private GoodsFormService goodsFormService;
+	@Resource
+	private DataDictionaryService dataDictionaryService;
+	
+	@RequestMapping("/goods/goodsEntryExitFormList.html")
+	public ModelAndView userList(Model model,HttpSession session, 
+			@RequestParam(value="currentpage",required=false) Integer currentpage,
+			@RequestParam(value="s_goodsName",required=false) String s_goodsName,
+			@RequestParam(value="s_goodsCode",required=false) String s_goodsCode,
+			@RequestParam(value="s_goodsType",required=false) String s_goodsType){
+				
+		Map<String, Object> baseModel = (Map<String, Object>)session.getAttribute(Constants.SESSION_BASE_MODEL);
+		if(baseModel == null){
+			return new ModelAndView("redirect:/");
+		}else{
+			//获取roleList and cardTypeList
+			DataDictionary dataDictionary = new DataDictionary();
+			dataDictionary.setTypeCode("GOODS_TYPE");
+			List<DataDictionary> goodsTypeList = null;
+			try {
+				goodsTypeList = dataDictionaryService.selectAll(dataDictionary);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			/*
+			 * 查询条件
+			 */
+			GoodsForm goodsForm = new GoodsForm();
+			if(s_goodsName != null && s_goodsName != ""){
+				goodsForm.setGoodsName("%"+SQLTools.transfer(s_goodsName)+"%");
+			}
+			if(s_goodsName != null && s_goodsName != ""){
+				goodsForm.setGoodsCode("%"+SQLTools.transfer(s_goodsCode)+"%");
+			}
+			if(!StringUtils.isNullOrEmpty(s_goodsType)){// != null and ""
+				goodsForm.setGoodsType(Integer.valueOf(s_goodsType));
+			}else{
+				goodsForm.setGoodsType(null);
+			}
+			
+			/*
+			 * page分页列表
+			 */
+			PageSupport page = new PageSupport();			
+			try {
+				//获取后台总记录数
+				page.setTotalCount(goodsFormService.count(goodsForm));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				page.setTotalCount(0);
+			}
+			//总记录数必须大于0 才有意义
+			if(page.getTotalCount() > 0){
+				if(currentpage != null){
+					page.setPage(currentpage);//设置当前页（用户输入）
+				}
+				if(page.getPage() <= 0){
+					page.setPage(1);
+				}
+				if(page.getPage() > page.getPageCount()){
+					page.setPage(page.getPageCount());
+				}
+				
+				goodsForm.setStarNum((page.getPage()-1)*page.getPageSize());//设置开始行
+				goodsForm.setPageSize(page.getPageSize());//设置每页显示数量
+				//该用户当前页列表的数据
+				List<GoodsFormEntity> formEntitys = null;
+				try {
+					formEntitys = goodsFormService.getPagesListEntity(goodsForm);
+				} catch (Exception e) {
+					// TODO: handle exception
+					formEntitys = null;
+					if(page == null){
+						page = new PageSupport();
+						page.setItems(null);
+					}
+				}
+				page.setItems(formEntitys);//设置当前页列表数据
+			}else{
+				page.setItems(null);
+			}			
+			
+			model.addAllAttributes(baseModel);//加载用户所属的功能菜单
+			model.addAttribute("page",page);
+			model.addAttribute("goodsTypeList", goodsTypeList);
+			//做查询的回显用
+			model.addAttribute("s_goodsName", s_goodsName);
+			model.addAttribute("s_goodsCode", s_goodsCode);
+			model.addAttribute("s_goodsType", s_goodsType);
+			
+			return new ModelAndView("/goods/goodsFormList");
+		}
+	}
+	
+}

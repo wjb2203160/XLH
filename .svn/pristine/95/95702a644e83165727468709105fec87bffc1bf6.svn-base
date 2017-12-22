@@ -1,0 +1,18 @@
+package com.mtr.psn.mapper.orders;
+
+import java.util.List;
+import com.mtr.psn.model.orders.OrderForm;
+
+public interface OrderFormMapper {
+
+	public OrderForm selectById(Integer id)throws Exception;
+
+	public List<OrderForm> selectAll(OrderForm orderForm)throws Exception;
+
+	public int insert(OrderForm orderForm)throws Exception;
+
+	public int update(OrderForm orderForm)throws Exception;
+
+	public int delete(OrderForm orderForm)throws Exception;
+
+}

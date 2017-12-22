@@ -1,0 +1,109 @@
+package com.mtr.psn.model.orders;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class ComplaintForm implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String complaintDate;
+	private Long complaintNum;
+	private String complaintType;
+	private Long franchiseeID;
+	private Long teamID;
+	private Long id;
+	private Long billNum;
+	private double complaintAmount;
+	private String reason;
+	private String remarks;
+	private Long riderID;
+
+	public String getComplaintDate() {
+		return complaintDate;
+	}
+
+	public void setComplaintDate(String complaintDate) {
+		this.complaintDate = complaintDate;
+	}
+
+	public Long getComplaintNum() {
+		return complaintNum;
+	}
+
+	public void setComplaintNum(Long complaintNum) {
+		this.complaintNum = complaintNum;
+	}
+
+	public String getComplaintType() {
+		return complaintType;
+	}
+
+	public void setComplaintType(String complaintType) {
+		this.complaintType = complaintType;
+	}
+
+	public Long getFranchiseeID() {
+		return franchiseeID;
+	}
+
+	public void setFranchiseeID(Long franchiseeID) {
+		this.franchiseeID = franchiseeID;
+	}
+
+	public Long getTeamID() {
+		return teamID;
+	}
+
+	public void setTeamID(Long teamID) {
+		this.teamID = teamID;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getBillNum() {
+		return billNum;
+	}
+
+	public void setBillNum(Long billNum) {
+		this.billNum = billNum;
+	}
+
+	public double getComplaintAmount() {
+		return complaintAmount;
+	}
+
+	public void setComplaintAmount(double complaintAmount) {
+		this.complaintAmount = complaintAmount;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public Long getRiderID() {
+		return riderID;
+	}
+
+	public void setRiderID(Long riderID) {
+		this.riderID = riderID;
+	}
+
+}

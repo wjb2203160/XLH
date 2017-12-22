@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.user.U_stateMapper">
+	<select id="selectById" parameterType="Integer" resultType="U_state">
+		SELECT * FROM u_state WHERE id=#{id} 
+	</select>
+	<select id="selectAll" parameterType="U_state" resultType="U_state">
+		SELECT * FROM u_state
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="state != null">AND state = #{state}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="U_state">
+		INSERT INTO u_state (id,state,createBy,createTime,modifyBy,modifyTime,remarks)
+		VALUES (#{id},#{state},#{createBy},#{createTime},#{modifyBy},#{modifyTime},#{remarks})
+	</insert>
+	<update id="update" parameterType="U_state">
+		UPDATE u_state SET
+		state=#{state},createBy=#{createBy},createTime=#{createTime},modifyBy=#{modifyBy},modifyTime=#{modifyTime},remarks=#{remarks}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="U_state">
+		DELETE FROM u_state WHERE id=#{id}
+	</delete>
+</mapper>

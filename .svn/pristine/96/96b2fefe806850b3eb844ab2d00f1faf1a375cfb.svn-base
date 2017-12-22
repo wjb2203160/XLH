@@ -1,0 +1,36 @@
+package com.mtr.psn.service.orders;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import com.mtr.psn.mapper.orders.AppealFormMapper;
+import com.mtr.psn.model.orders.AppealForm;
+
+@Service
+public class AppealFormServiceImpl implements AppealFormService {
+
+	@Resource
+	private AppealFormMapper appealFormMapper;
+
+	@Override
+	public AppealForm selectById(Integer id)throws Exception{
+		return	appealFormMapper.selectById(id);
+	}
+	@Override
+	public List<AppealForm> selectAll(AppealForm appealForm)throws Exception{
+		return	appealFormMapper.selectAll(appealForm);
+	}
+	@Override
+	public int psn_insert(AppealForm appealForm)throws Exception{
+		return	appealFormMapper.insert(appealForm);
+	}
+	@Override
+	public int psn_update(AppealForm appealForm)throws Exception{
+		return	appealFormMapper.update(appealForm);
+	}
+	@Override
+	public int psn_delete(AppealForm appealForm)throws Exception{
+		return	appealFormMapper.delete(appealForm);
+	}
+}

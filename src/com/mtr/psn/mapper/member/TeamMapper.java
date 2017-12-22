@@ -1,0 +1,18 @@
+package com.mtr.psn.mapper.member;
+
+import java.util.List;
+import com.mtr.psn.model.member.Team;
+
+public interface TeamMapper {
+
+	public Team selectById(Long id)throws Exception;
+
+	public List<Team> selectAll(Team team)throws Exception;
+
+	public int insert(Team team)throws Exception;
+
+	public int update(Team team)throws Exception;
+
+	public int delete(Team team)throws Exception;
+
+}

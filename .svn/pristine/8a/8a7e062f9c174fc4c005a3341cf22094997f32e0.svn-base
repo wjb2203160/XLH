@@ -1,0 +1,29 @@
+package com.mtr.psn.model.member;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.mtr.psn.model.BaseModel;
+
+public class Franchisee extends BaseModel implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Integer franchiseeID;
+	private String franchiseeName;
+
+	public Integer getFranchiseeID() {
+		return franchiseeID;
+	}
+
+	public void setFranchiseeID(Integer franchiseeID) {
+		this.franchiseeID = franchiseeID;
+	}
+
+	public String getFranchiseeName() {
+		return franchiseeName;
+	}
+
+	public void setFranchiseeName(String franchiseeName) {
+		this.franchiseeName = franchiseeName;
+	}
+}

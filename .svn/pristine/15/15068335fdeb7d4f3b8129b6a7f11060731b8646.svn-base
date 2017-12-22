@@ -1,0 +1,56 @@
+package com.mtr.psn.model.orders;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class QueryOrder implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Date orderForm;
+	private Date orderTo;
+	private String result;
+	private Integer riderID;
+	private String overTime;
+	 
+
+	public Date getOrderForm() {
+		return orderForm;
+	}
+
+	public void setOrderForm(Date OrderForm) {
+		this.orderForm = OrderForm;
+	}
+
+	public Date getOrderTo() {
+		return orderTo;
+	}
+
+	public void setOrderTo(Date orderTo) {
+		this.orderTo = orderTo;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String setResult) {
+		this.result = setResult;
+	}
+
+	public Integer getRiderID() {
+		return riderID;
+	}
+
+	public void setRiderID(Integer riderID) {
+		this.riderID = riderID;
+	}
+
+	public String getOverTime() {
+		return overTime;
+	}
+
+	public void setOverTime(String overTime ){
+		this.overTime = overTime;
+	}
+
+}

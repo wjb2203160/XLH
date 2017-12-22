@@ -1,0 +1,102 @@
+package com.mtr.psn.service.goods;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import com.mtr.psn.mapper.goods.GoodsFormMapper;
+import com.mtr.psn.model.goods.GoodsForm;
+import com.mtr.psn.model.other.DataDictionary;
+import com.mtr.psn.model.user.User;
+import com.mtr.psn.model.webEntity.GoodsFormEntity;
+import com.mtr.psn.service.other.DataDictionaryService;
+import com.mtr.psn.service.user.UserService;
+
+@Service
+public class GoodsFormServiceImpl implements GoodsFormService {
+
+	@Resource
+	private GoodsFormMapper goodsFormMapper;
+	@Resource
+	private DataDictionaryService dataDictionaryService;
+	@Resource
+	private UserService userService;
+
+	@Override
+	public GoodsForm selectById(Integer id)throws Exception{
+		return	goodsFormMapper.selectById(id);
+	}
+	@Override
+	public int selectByName(String Name)throws Exception{
+		return	goodsFormMapper.selectByName(Name);
+	}
+	@Override
+	public int count(GoodsForm goodsForm)throws Exception{
+		return	goodsFormMapper.count(goodsForm);
+	}
+	@Override
+	public List<GoodsForm> getPagesList(GoodsForm goodsForm)throws Exception{
+		return	goodsFormMapper.getPagesList(goodsForm);
+	}
+	@Override
+	public List<GoodsForm> selectAll(GoodsForm goodsForm)throws Exception{
+		return	goodsFormMapper.selectAll(goodsForm);
+	}
+	@Override
+	public int psn_insert(GoodsForm goodsForm)throws Exception{
+		return	goodsFormMapper.insert(goodsForm);
+	}
+	@Override
+	public int psn_update(GoodsForm goodsForm)throws Exception{
+		return	goodsFormMapper.update(goodsForm);
+	}
+	@Override
+	public int psn_delete(GoodsForm goodsForm)throws Exception{
+		return	goodsFormMapper.delete(goodsForm);
+	}
+	@Override
+	public List<GoodsForm> selectByGoodsType(Integer goodsType) throws Exception {
+		// TODO Auto-generated method stub
+		return goodsFormMapper.selectByGoodsType(goodsType);
+	}
+	/**
+	 * 包装分页列表
+	 * @param goodsEntryExitForm
+	 * @return
+	 * @throws Exception
+	 */
+	public List<GoodsFormEntity> getPagesListEntity(GoodsForm goodsForm) throws Exception {
+		List<GoodsFormEntity> entities = new ArrayList<GoodsFormEntity>();
+		List<GoodsForm> geeForms = getPagesList(goodsForm);
+		if(geeForms.size() > 0){
+			//填充实体类
+			for (int i = 0; i < geeForms.size(); i++) {
+				GoodsFormEntity entity = new GoodsFormEntity(geeForms.get(i));
+				if(geeForms.get(i).getGoodsType()!=null){//物品类型名称
+					DataDictionary dataDictionary = dataDictionaryService.selectById(geeForms.get(i).getGoodsType());
+					if(dataDictionary != null)
+						entity.setGoodsTypeName(dataDictionary.getValueName());
+				}
+				if(geeForms.get(i).getGoodsInBy() != null){
+					User user = userService.selectById(geeForms.get(i).getGoodsInBy());
+					if(user != null){
+						entity.setGoodsInByName(user.getUserName());
+						entity.setGoodsInByPhone(user.getCellphone());
+					}
+				}
+				if(geeForms.get(i).getCreateBy() != null){//经手人/登记人
+					User user = userService.selectById(geeForms.get(i).getCreateBy());
+					if(user != null){
+						entity.setHandledName(user.getUserName());
+						entity.setHandledPhone(user.getCellphone());
+					}
+				}
+				entities.add(entity);
+			}
+		}
+		
+		return entities;
+	}
+	
+}

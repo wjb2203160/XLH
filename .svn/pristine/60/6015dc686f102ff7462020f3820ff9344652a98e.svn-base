@@ -1,0 +1,334 @@
+package com.mtr.psn.model.orders;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class OrderForm implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Date orderDate;
+	private Integer franchiseeID;
+	private Integer teamID;
+	private Integer merchantID;
+	private String orderFrom;
+	private String orderNum;
+	private String billNum;
+	private Integer riderID;
+	private String overTime;
+	private String status;
+	private String fastDelivery;
+	private String reason;
+	private String result;
+	private String illegal;
+	private Date orderTime;
+	private Date endTime;
+	private Object tdFee;
+	private Object jcFee;
+	private Object hdSubsidy;
+	private Object djSubsidy;
+	private Object sxSubsidy;
+	private Object jlSubsidy;
+	private Object sdSubsidy;
+	private Object tqSubsidy;
+	private Object yxsSubsidy;
+	private Object xtDebit;
+	private Object psDebit;
+	private Object ddDebit;
+	private Object sxDebit;
+	private Object wgDebit;
+	private Object weightMarkup;
+	private Object jjDebit;
+	private Object llDebit;
+	private Object wgfDebit;
+	private Integer id;
+	private String remarks;
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public Integer getFranchiseeID() {
+		return franchiseeID;
+	}
+
+	public void setFranchiseeID(Integer franchiseeID) {
+		this.franchiseeID = franchiseeID;
+	}
+
+	public Integer getTeamID() {
+		return teamID;
+	}
+
+	public void setTeamID(Integer teamID) {
+		this.teamID = teamID;
+	}
+
+	public Integer getMerchantID() {
+		return merchantID;
+	}
+
+	public void setMerchantID(Integer merchantID) {
+		this.merchantID = merchantID;
+	}
+
+	public String getOrderFrom() {
+		return orderFrom;
+	}
+
+	public void setOrderFrom(String orderFrom) {
+		this.orderFrom = orderFrom;
+	}
+
+	public String getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(String orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	public String getBillNum() {
+		return billNum;
+	}
+
+	public void setBillNum(String billNum) {
+		this.billNum = billNum;
+	}
+
+	public Integer getRiderID() {
+		return riderID;
+	}
+
+	public void setRiderID(Integer riderID) {
+		this.riderID = riderID;
+	}
+
+	public String getOverTime() {
+		return overTime;
+	}
+
+	public void setOverTime(String overTime) {
+		this.overTime = overTime;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getFastDelivery() {
+		return fastDelivery;
+	}
+
+	public void setFastDelivery(String fastDelivery) {
+		this.fastDelivery = fastDelivery;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getIllegal() {
+		return illegal;
+	}
+
+	public void setIllegal(String illegal) {
+		this.illegal = illegal;
+	}
+
+	public Date getOrderTime() {
+		return orderTime;
+	}
+
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public Object getTdFee() {
+		return tdFee;
+	}
+
+	public void setTdFee(Object tdFee) {
+		this.tdFee = tdFee;
+	}
+
+	public Object getJcFee() {
+		return jcFee;
+	}
+
+	public void setJcFee(Object jcFee) {
+		this.jcFee = jcFee;
+	}
+
+	public Object getHdSubsidy() {
+		return hdSubsidy;
+	}
+
+	public void setHdSubsidy(Object hdSubsidy) {
+		this.hdSubsidy = hdSubsidy;
+	}
+
+	public Object getDjSubsidy() {
+		return djSubsidy;
+	}
+
+	public void setDjSubsidy(Object djSubsidy) {
+		this.djSubsidy = djSubsidy;
+	}
+
+	public Object getSxSubsidy() {
+		return sxSubsidy;
+	}
+
+	public void setSxSubsidy(Object sxSubsidy) {
+		this.sxSubsidy = sxSubsidy;
+	}
+
+	public Object getJlSubsidy() {
+		return jlSubsidy;
+	}
+
+	public void setJlSubsidy(Object jlSubsidy) {
+		this.jlSubsidy = jlSubsidy;
+	}
+
+	public Object getSdSubsidy() {
+		return sdSubsidy;
+	}
+
+	public void setSdSubsidy(Object sdSubsidy) {
+		this.sdSubsidy = sdSubsidy;
+	}
+
+	public Object getTqSubsidy() {
+		return tqSubsidy;
+	}
+
+	public void setTqSubsidy(Object tqSubsidy) {
+		this.tqSubsidy = tqSubsidy;
+	}
+
+	public Object getYxsSubsidy() {
+		return yxsSubsidy;
+	}
+
+	public void setYxsSubsidy(Object yxsSubsidy) {
+		this.yxsSubsidy = yxsSubsidy;
+	}
+
+	public Object getXtDebit() {
+		return xtDebit;
+	}
+
+	public void setXtDebit(Object xtDebit) {
+		this.xtDebit = xtDebit;
+	}
+
+	public Object getPsDebit() {
+		return psDebit;
+	}
+
+	public void setPsDebit(Object psDebit) {
+		this.psDebit = psDebit;
+	}
+
+	public Object getDdDebit() {
+		return ddDebit;
+	}
+
+	public void setDdDebit(Object ddDebit) {
+		this.ddDebit = ddDebit;
+	}
+
+	public Object getSxDebit() {
+		return sxDebit;
+	}
+
+	public void setSxDebit(Object sxDebit) {
+		this.sxDebit = sxDebit;
+	}
+
+	public Object getWgDebit() {
+		return wgDebit;
+	}
+
+	public void setWgDebit(Object wgDebit) {
+		this.wgDebit = wgDebit;
+	}
+
+	public Object getWeightMarkup() {
+		return weightMarkup;
+	}
+
+	public void setWeightMarkup(Object weightMarkup) {
+		this.weightMarkup = weightMarkup;
+	}
+
+	public Object getJjDebit() {
+		return jjDebit;
+	}
+
+	public void setJjDebit(Object jjDebit) {
+		this.jjDebit = jjDebit;
+	}
+
+	public Object getLlDebit() {
+		return llDebit;
+	}
+
+	public void setLlDebit(Object llDebit) {
+		this.llDebit = llDebit;
+	}
+
+	public Object getWgfDebit() {
+		return wgfDebit;
+	}
+
+	public void setWgfDebit(Object wgfDebit) {
+		this.wgfDebit = wgfDebit;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+}

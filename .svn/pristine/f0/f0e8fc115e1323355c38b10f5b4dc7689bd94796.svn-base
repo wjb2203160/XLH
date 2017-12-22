@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.pay.Salary_hMapper">
+	<select id="selectById" parameterType="Long" resultType="Salary_h">
+		SELECT * FROM salary_h WHERE id=#{id} 
+	</select>
+	<select id="selectBysiteId" parameterType="Long" resultType="Salary_h">
+		SELECT * FROM salary_h WHERE siteId=#{siteId} 
+	</select>
+	<select id="selectAll" parameterType="Salary_h" resultType="Salary_h">
+		SELECT * FROM salary_h
+		<where>
+			<if test="siteName != null">AND siteName = #{siteName}
+			</if>
+			<if test="basicSalary != null">AND basicSalary = #{basicSalary}
+			</if>
+			<if test="perfectAttendance != null">AND perfectAttendance = #{perfectAttendance}
+			</if>
+			<if test="attendanceDay != null">AND attendanceDay = #{attendanceDay}
+			</if>
+			<if test="orderNum != null">AND orderNum = #{orderNum}
+			</if>
+			<if test="orderPrice != null">AND orderPrice = #{orderPrice}
+			</if>
+			<if test="executionDate != null">AND executionDate = #{executionDate}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+			<if test="id != null">AND id = #{id}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="Salary_h">
+		INSERT INTO salary_h (siteName,basicSalary,perfectAttendance,attendanceDay,orderNum,orderPrice,executionDate,createTime,createBy,modifyTime,modifyBy,remarks,id)
+		VALUES (#{siteName},#{basicSalary},#{perfectAttendance},#{attendanceDay},#{orderNum},#{orderPrice},#{executionDate},#{createTime},#{createBy},#{modifyTime},#{modifyBy},#{remarks},#{id})
+	</insert>
+	<update id="update" parameterType="Salary_h">
+		UPDATE salary_h SET
+		basicSalary=#{basicSalary},perfectAttendance=#{perfectAttendance},attendanceDay=#{attendanceDay},orderNum=#{orderNum},orderPrice=#{orderPrice},executionDate=#{executionDate},createTime=#{createTime},createBy=#{createBy},modifyTime=#{modifyTime},modifyBy=#{modifyBy},remarks=#{remarks},id=#{id}
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="Salary_h">
+		DELETE FROM salary_h WHERE id=#{id}
+	</delete>
+</mapper>

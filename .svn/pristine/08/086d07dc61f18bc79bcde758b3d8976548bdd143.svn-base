@@ -1,0 +1,385 @@
+package com.mtr.psn.controller.backend;
+
+import java.sql.Connection;
+
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import java.util.List;
+import java.util.Map;
+
+
+import javax.annotation.Resource;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import org.springframework.web.servlet.ModelAndView;
+
+import com.mtr.psn.common.Constants;
+import com.mtr.psn.common.PageSupport;
+
+import com.mtr.psn.controller.BaseController;
+
+import com.mtr.psn.model.pay.Salary_d;
+import com.mtr.psn.model.pay.Salary_h;
+
+import com.mtr.psn.service.pay.Salary_dService;
+import com.mtr.psn.service.pay.Salary_hService;
+
+import net.sf.json.JSONObject;
+
+@Controller
+public class SalaryController extends BaseController {
+
+	@Resource
+	private Salary_hService salary_hService;
+	@Resource
+	private  Salary_dService salary_dService;
+	
+	private static Connection con;
+	/**
+	 * 进入表格
+	 
+	 * @return
+	 */
+	@RequestMapping(value="/backend/salary.html",method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView maincalendar (HttpSession session, 
+			@RequestParam(value="currentpage",required=false) Integer currentpage,
+			@RequestParam(value="siteName",required=false) String siteName,
+			@RequestParam(value="id",required=false) Long id 
+		 
+		){
+		ModelAndView model = new ModelAndView();
+		Map<String, Object> baseModel = (Map<String, Object>)session.getAttribute(Constants.SESSION_BASE_MODEL);
+		if(baseModel == null){
+			return new ModelAndView("redirect:/");
+		}else{
+			Salary_h salary_h = new Salary_h();
+			if (siteName != null && siteName.toString() != "") {
+				salary_h.setSiteName(siteName);
+			}
+			if (id != null && id.toString() != "") {
+				salary_h.setId(id);
+			}
+			PageSupport page = new PageSupport();	
+			try {
+				//获取后台总记录数
+		 	page.setTotalCount(salary_hService.Count(salary_h));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				page.setTotalCount(0);
+			}
+			//总记录数必须大于0 才有意义
+			if(page.getTotalCount() > 0){
+				if(currentpage != null){
+					page.setPage(currentpage);
+				}
+				if(page.getPage() <= 0){
+					page.setPage(1);
+				}
+				if(page.getPage() > page.getPageCount()){
+					page.setPage(page.getPageCount());
+				}
+				
+				salary_h.setStarNum((page.getPage()-1)*page.getPageSize());//设置开始行
+				salary_h.setPageSize(page.getPageSize());//设置每页显示数量
+				//该用户当前页列表的数据
+				List<Salary_h> salaryh = null;
+				try {
+					salaryh = salary_hService.selectAll(salary_h);
+				} catch (Exception e) {
+					// TODO: handle exception
+					salaryh = null;
+					if(page == null){
+						page = new PageSupport();
+						page.setItems(null);
+					}
+				}
+				page.setItems(salaryh);//设置当前页列表数据
+			}else{
+				page.setItems(null);
+			}
+			model.addAllObjects(baseModel);//加载用户所属的功能菜单
+			model.addObject("page",page);
+			Calendar	now = Calendar.getInstance();
+			now.add(Calendar.MONTH, -1);
+		 
+			model.addObject("siteName", siteName);
+			model.addObject("id", id);
+			 
+			model.setViewName("/backend/salary");
+		}
+	 return  model;
+	}
+
+	
+	/**
+	 * 新增薪资信息
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/backend/salaryAdd.html",method=RequestMethod.POST)
+	@ResponseBody
+	public String salaryAdd ( 
+			@RequestParam(value="jsonData",required=false) String jsonData
+		) throws Exception{
+		JSONObject salary_hObject = JSONObject.fromObject(jsonData);
+		Salary_h salary_h = (Salary_h)salary_hObject.toBean(salary_hObject, Salary_h.class);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		salary_h.setModifyTime(format.format(new Date()));
+		salary_h.setModifyBy(this.getCurrentUser().getId());
+		salary_h.setCreateTime(format.format(new Date()));
+		salary_h.setCreateBy(this.getCurrentUser().getId());
+		if(salary_hService.psn_insert(salary_h)>0){
+			 return "1";//成功
+		}
+	 return "0";//失败
+	}
+	
+	
+	/**
+	 * 进入薪资详情
+	 * @return
+	 */
+	@RequestMapping(value="/backend/salaryDetail.do",method=RequestMethod.POST, produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String salaryDetail ( 
+			@RequestParam(value="id",required=false) String id
+		){
+		if(id!=null&&id!=""){
+			String str = "";
+			Salary_h salary_h = new Salary_h();
+		try {
+			salary_h =salary_hService.selectById(Long.valueOf(id));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(salary_h!=null){
+		  JSONObject json = JSONObject.fromObject(salary_h);
+		  str = json.toString();
+		  }
+		    return str;
+		}else{
+			return "";
+		}
+	}
+	
+	/**
+	 * 修改工资信息
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/backend/salaryModify.html",method=RequestMethod.POST)
+	@ResponseBody
+	public String salaryModify ( 
+			@RequestParam(value="jsonData",required=false) String jsonData
+		) throws Exception{
+		JSONObject salaryObject = JSONObject.fromObject(jsonData);
+		Salary_h salary = (Salary_h)salaryObject.toBean(salaryObject, Salary_h.class);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		salary.setModifyTime(format.format(new Date()));
+		salary.setModifyBy(this.getCurrentUser().getId());
+		if(salary_hService.psn_update(salary)>0){
+			 return "1";//成功
+		}
+	 return "0";//失败
+	}
+	/**
+	 * 删除工资记录 
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/backend/salaryDelete.html",method=RequestMethod.POST)
+	@ResponseBody
+	public String checkPayrollDelete( 
+			@RequestParam(value="id",required=false) Long id
+		) throws Exception{
+		 
+		Salary_h salary_h = new Salary_h();
+		salary_h.setId(id);
+		if(salary_hService.psn_delete(salary_h)>0){
+			 return "1";//成功
+		}
+	 return "0";//失败
+	}
+	
+	/**
+	 * 进入表格明细
+	 
+	 * @return
+	 */
+	@RequestMapping(value="/backend/salaryMx.html",method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView salaryMx (HttpSession session, 
+			@RequestParam(value="currentpage",required=false) Integer currentpage,
+			@RequestParam(value="siteId",required=false) Long siteId,
+			@RequestParam(value="siteName",required=false) String siteName
+		){
+		ModelAndView model = new ModelAndView();
+		Map<String, Object> baseModel = (Map<String, Object>)session.getAttribute(Constants.SESSION_BASE_MODEL);
+		if(baseModel == null){
+			return new ModelAndView("redirect:/");
+		}else{
+			Salary_d salary_d = new Salary_d();
+			 
+			if (siteId != null && siteId.toString() != "") {
+				salary_d.setSiteId(siteId);
+			}
+			PageSupport page = new PageSupport();	
+			try {
+				//获取后台总记录数
+		 	page.setTotalCount(salary_dService.Count(salary_d));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				page.setTotalCount(0);
+			}
+			//总记录数必须大于0 才有意义
+			if(page.getTotalCount() > 0){
+				if(currentpage != null){
+					page.setPage(currentpage);
+				}
+				if(page.getPage() <= 0){
+					page.setPage(1);
+				}
+				if(page.getPage() > page.getPageCount()){
+					page.setPage(page.getPageCount());
+				}
+				
+				salary_d.setStarNum((page.getPage()-1)*page.getPageSize());//设置开始行
+				salary_d.setPageSize(page.getPageSize());//设置每页显示数量
+				//该用户当前页列表的数据
+				List<Salary_d> salaryd = null;
+				try {
+					salaryd = salary_dService.selectAll(salary_d);
+				} catch (Exception e) {
+					// TODO: handle exception
+					salaryd = null;
+					if(page == null){
+						page = new PageSupport();
+						page.setItems(null);
+					}
+				}
+				page.setItems(salaryd);//设置当前页列表数据
+			}else{
+				page.setItems(null);
+			}
+			model.addAllObjects(baseModel);//加载用户所属的功能菜单
+			model.addObject("page",page);
+			Calendar	now = Calendar.getInstance();
+			now.add(Calendar.MONTH, -1);
+			model.addObject("siteId", siteId);
+			model.addObject("siteName", siteName);
+			model.setViewName("/backend/salaryMx");
+		}
+	 return  model;
+	}
+	
+	/**
+	 * 新增薪资明细
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/backend/salaryMxAdd.html",method=RequestMethod.POST)
+	@ResponseBody
+	public String salaryMxAdd ( 
+			@RequestParam(value="jsonData",required=false) String jsonData
+		) throws Exception{
+		JSONObject salary_dObject = JSONObject.fromObject(jsonData);
+		Salary_d salary_d = (Salary_d)salary_dObject.toBean(salary_dObject, Salary_d.class);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		salary_d.setModifyTime(format.format(new Date()));
+		salary_d.setModifyBy(this.getCurrentUser().getId());
+		salary_d.setCreateTime(format.format(new Date()));
+		salary_d.setCreateBy(this.getCurrentUser().getId());
+		if(salary_dService.psn_insert(salary_d)>0){
+			 return "1";//成功
+		}
+	 return "0";//失败
+	}
+	
+	
+	/**
+	 * 进入薪资明细详情
+	 * @return
+	 */
+	@RequestMapping(value="/backend/salaryMxDetail.do",method=RequestMethod.POST, produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String salaryMxDetail ( 
+			@RequestParam(value="siteId",required=false) String siteId
+		){
+		if(siteId!=null&&siteId!=""){
+			String str = "";
+			Salary_d salary_d = new Salary_d();
+		try {
+			salary_d =salary_dService.selectById(Long.valueOf(siteId));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(salary_d!=null){
+		  JSONObject json = JSONObject.fromObject(salary_d);
+		  str = json.toString();
+		  }
+		    return str;
+		}else{
+			return "";
+		}
+	}
+	
+	/**
+	 * 修改明细 
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/backend/salaryMxModify.html",method=RequestMethod.POST)
+	@ResponseBody
+	public String salaryMxModify ( 
+			@RequestParam(value="jsonData",required=false) String jsonData
+		) throws Exception{
+		JSONObject salaryMxObject = JSONObject.fromObject(jsonData);
+		Salary_d salaryMx = (Salary_d)salaryMxObject.toBean(salaryMxObject, Salary_d.class);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		salaryMx.setModifyTime(format.format(new Date()));
+		salaryMx.setModifyBy(this.getCurrentUser().getId());
+		if(salary_dService.psn_update(salaryMx)>0){
+			 return "1";//成功
+		}
+	 return "0";//失败
+	}
+	/**
+	 * 删除薪资明细 
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/backend/salaryMxDelete.html",method=RequestMethod.POST)
+	@ResponseBody
+	public String salaryMxDelete( 
+			@RequestParam(value="id",required=false) Long id
+		) throws Exception{
+		Salary_d salary_d = new Salary_d();
+		salary_d.setId(id);
+		if(salary_dService.psn_delete(salary_d)>0){
+			 return "1";//成功
+		}
+	 return "0";//失败
+	}
+}

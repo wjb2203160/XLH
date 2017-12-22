@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mtr.psn.mapper.pay.WageMapper">
+	<select id="selectById" parameterType="Long" resultType="Wage">
+		SELECT w.* ,r.riderName FROM wage as w LEFT JOIN rider as r ON w.id = r.id  WHERE w.id=#{id} 
+	</select>
+	
+		<!-- 获取骑手数量-->
+	<select id="CountByRider" parameterType="QueryWage" resultType="int">
+		SELECT  COUNT(w.id) FROM wage as w
+		LEFT JOIN rider as r ON w.id = r.id
+		<where>
+			<if test="orderForm != null">AND w.createTime &gt;= #{orderForm}
+			</if>
+			<if test="orderTo != null">AND w.createTime  &lt; #{orderTo}
+			</if>
+			<if test="riderName != null">AND r.riderName = #{riderName}
+			</if>
+			<if test="riderID != null">AND w.id = #{riderID}
+			</if>
+			<if test="teamID != null">AND w.teamID = #{teamID}
+			</if>
+			 <if test="zeroNotDisp != null">AND w.subsidization  &lt;&gt; #{zeroNotDisp}
+			</if>
+		</where>
+	</select>
+	
+		<!-- 分页查询 -->
+
+	<select id="selectWageList" parameterType="QueryWage" resultType="Wage">
+		SELECT w.wageDate,w.id,r.riderName,w.totalCount,w.errorCount,w.normalCount,w.timeoutCount,w.onTimeCount,w.subsidization,w.leakageBuckle,w.referralFee,
+		w.insuranceFee,w.amerce,w.overAllowance,w.shouldPay,w.incomeTax,w.goodFee,w.advancePay,w.electricity,w.realPay,
+		w.createTime,u.userName,w.modifyTime,t.userName,w.remarks  FROM wage as w 
+		LEFT JOIN u_user as u ON w.createBy = u.id
+		LEFT JOIN u_user as t ON w.modifyBy = t.id
+		LEFT JOIN rider as r ON w.id = r.id
+			<where>
+			<if test="orderForm != null">AND w.createTime &gt;= #{orderForm}
+			</if>
+			<if test="orderTo != null">AND w.createTime  &lt; #{orderTo}
+			</if>
+			<if test="riderName != null">AND r.riderName = #{riderName}
+			</if>
+			<if test="riderID != null">AND w.id = #{riderID}
+			</if>
+			<if test="teamID != null">AND w.teamID = #{teamID}
+			</if>
+			 <if test="zeroNotDisp != null">AND w.subsidization  &lt;&gt; #{zeroNotDisp}
+			</if>
+		</where>
+		order by w.createTime desc limit #{starNum},#{pageSize};
+	</select>
+	 
+	<!--  查询库存领用情况 -->
+	<select id="selectGoodsList" parameterType="QueryWage" resultType="GoodsRegistrationForm">
+		SELECT g.goodsId,m.goodsName,g.claimantCount,g.claimantBy,g.claimantName  FROM mtr_goods_registration_form as g 
+		LEFT JOIN mtr_goods as m ON g.goodsId = m.id
+			<where>
+			<if test="orderForm != null">AND g.claimantTime &gt;= #{orderForm}
+			</if>
+			<if test="orderTo != null">AND g.claimantTime  &lt; #{orderTo}
+			</if>
+			<if test="riderID != null">AND g.claimantBy = #{riderID}
+			</if>
+		</where>
+	</select>
+	 
+	 <!-- 获取站点工资汇总数量-->
+	<select id="CountByTeam" parameterType="QueryWage" resultType="int">
+		select count(*) from (SELECT w.wageDate,w.teamID,te.teamName,SUM(w.totalCount),SUM(w.errorCount),SUM(w.normalCount),SUM(w.timeoutCount),SUM(w.onTimeCount),SUM(w.subsidization),SUM(w.leakageBuckle),SUM(w.referralFee),
+		SUM(w.insuranceFee),SUM(w.amerce),SUM(w.overAllowance),SUM(w.shouldPay),SUM(w.incomeTax),SUM(w.goodFee),SUM(w.advancePay),SUM(w.electricity),SUM(w.realPay)
+		  FROM team as te
+	    LEFT JOIN wage as w ON w.teamID = te.id
+		<where>
+			<if test="orderForm != null">AND w.createTime &gt;= #{orderForm}
+			</if>
+			<if test="orderTo != null">AND w.createTime  &lt; #{orderTo}
+			</if>
+			<if test="riderName != null">AND r.riderName = #{riderName}
+			</if>
+			<if test="riderID != null">AND w.id = #{riderID}
+			</if>
+			<if test="teamID != null">AND w.teamID = #{teamID}
+			</if>
+			 <if test="zeroNotDisp != null">AND w.subsidization  &lt;&gt; #{zeroNotDisp}
+			</if>
+			  AND w.wageDate &lt;&gt; 'null' 
+		</where>
+		 group by te.id) as total
+	</select>
+	 
+	<!--  站点工资汇总 -->
+	<select id="selectTeamList" parameterType="QueryWage" resultType="Wage">
+		SELECT w.wageDate,w.teamID,te.teamName,SUM(w.totalCount) as totalCount,SUM(w.errorCount) as errorCount,SUM(w.normalCount) as normalCount,SUM(w.timeoutCount) as timeoutCount,SUM(w.onTimeCount) as onTimeCount,SUM(w.subsidization) as subsidization,SUM(w.leakageBuckle) as leakageBuckle,SUM(w.referralFee) as referralFee,
+		SUM(w.insuranceFee) as insuranceFee,SUM(w.amerce) as amerce,SUM(w.overAllowance) as overAllowance,SUM(w.shouldPay) as shouldPay,SUM(w.incomeTax) as incomeTax,SUM(w.goodFee) as goodFee,SUM(w.advancePay) as advancePay,SUM(w.electricity) as electricity,SUM(w.realPay) as realPay
+		FROM team as te
+	    LEFT JOIN wage as w ON w.teamID = te.id
+			<where>
+			<if test="orderForm != null">AND w.createTime &gt;= #{orderForm}
+			</if>
+			<if test="orderTo != null">AND w.createTime  &lt; #{orderTo}
+			</if>
+			<if test="teamID != null">AND w.teamID = #{teamID}
+			</if>
+		       AND w.wageDate &lt;&gt; 'null' 
+		</where>
+		 group by te.id 
+	</select>
+	 
+	<select id="selectAll" parameterType="Wage" resultType="Wage">
+		SELECT * FROM wage
+		<where>
+			<if test="id != null">AND id = #{id}
+			</if>
+			<if test="errorCount != null">AND errorCount = #{errorCount}
+			</if>
+			<if test="normalCount != null">AND normalCount = #{normalCount}
+			</if>
+			<if test="timeoutCount != null">AND timeoutCount = #{timeoutCount}
+			</if>
+			<if test="onTimeCount != null">AND onTimeCount = #{onTimeCount}
+			</if>
+			<if test="subsidization != null">AND subsidization = #{subsidization}
+			</if>
+			<if test="leakageBuckle != null">AND leakageBuckle = #{leakageBuckle}
+			</if>
+			<if test="referralFee != null">AND referralFee = #{referralFee}
+			</if>
+			<if test="insuranceFee != null">AND insuranceFee = #{insuranceFee}
+			</if>
+			<if test="amerce != null">AND amerce = #{amerce}
+			</if>
+			<if test="overAllowance != null">AND overAllowance = #{overAllowance}
+			</if>
+			<if test="shouldPay != null">AND shouldPay = #{shouldPay}
+			</if>
+			<if test="incomeTax != null">AND incomeTax = #{incomeTax}
+			</if>
+			<if test="goodFee != null">AND goodFee = #{goodFee}
+			</if>
+			<if test="advancePay != null">AND advancePay = #{advancePay}
+			</if>
+			<if test="electricity != null">AND electricity = #{electricity}
+			</if>
+			<if test="realPay != null">AND realPay = #{realPay}
+			</if>
+			<if test="createTime != null">AND createTime = #{createTime}
+			</if>
+			<if test="createBy != null">AND createBy = #{createBy}
+			</if>
+			<if test="modifyTime != null">AND modifyTime = #{modifyTime}
+			</if>
+			<if test="modifyBy != null">AND modifyBy = #{modifyBy}
+			</if>
+			<if test="remarks != null">AND remarks = #{remarks}
+			</if>
+			<if test="wageDate != null">AND wageDate = #{wageDate}
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="Wage">
+		INSERT ignore wage (teamID,id,totalCount,errorCount,normalCount,timeoutCount,onTimeCount,subsidization,leakageBuckle,referralFee,insuranceFee,amerce,overAllowance,shouldPay,incomeTax,goodFee,advancePay,electricity,realPay,createTime,createBy,modifyTime,modifyBy,remarks,wageDate)
+		VALUES (#{teamID},#{id},#{totalCount},#{errorCount},#{normalCount},#{timeoutCount},#{onTimeCount},#{subsidization},#{leakageBuckle},#{referralFee},#{insuranceFee},#{amerce},#{overAllowance},#{shouldPay},#{incomeTax},#{goodFee},#{advancePay},#{electricity},#{realPay},#{createTime},#{createBy},#{modifyTime},#{modifyBy},#{remarks},#{wageDate})
+	</insert>
+	<update id="update" parameterType="Wage">
+		UPDATE wage SET
+	
+		<if test="errorCount != null"> errorCount = #{errorCount},
+			</if>
+			<if test="normalCount != null">normalCount= #{normalCount},
+			</if>
+			<if test="timeoutCount != null"> timeoutCount = #{timeoutCount},
+			</if>
+			<if test="onTimeCount != null"> onTimeCount = #{onTimeCount},
+			</if>
+			<if test="subsidization != null"> subsidization = #{subsidization},
+			</if>
+			<if test="leakageBuckle != null"> leakageBuckle = #{leakageBuckle},
+			</if>
+			<if test="referralFee != null"> referralFee = #{referralFee},
+			</if>
+			<if test="insuranceFee != null"> insuranceFee = #{insuranceFee},
+			</if>
+			<if test="amerce != null"> amerce = #{amerce},
+			</if>
+			<if test="shouldPay != null"> shouldPay = #{shouldPay},
+			</if>
+	 
+			<if test="incomeTax != null"> incomeTax = #{incomeTax},
+			</if>
+			<if test="goodFee != null"> goodFee = #{goodFee},
+			</if>
+			<if test="advancePay != null"> advancePay = #{advancePay},
+			</if>
+			<if test="electricity != null"> electricity = #{electricity},
+			</if>
+			<if test="realPay != null"> realPay = #{realPay},
+			</if>
+			<if test="createTime != null"> createTime = #{createTime},
+			</if>
+			<if test="createBy != null"> createBy = #{createBy},
+			</if>
+			<if test="modifyTime != null"> modifyTime = #{modifyTime},
+			</if>
+			<if test="modifyBy != null"> modifyBy = #{modifyBy},
+			</if>
+			<if test="remarks != null"> remarks = #{remarks},
+			</if>
+			<if test="wageDate != null"> wageDate = #{wageDate},
+			</if>
+			<if test="errorCount != null"> errorCount = #{errorCount}
+			</if>
+		WHERE id=#{id}
+	</update>
+	<delete id="delete" parameterType="Wage">
+		DELETE FROM wage WHERE id=#{id}
+	</delete>
+</mapper>

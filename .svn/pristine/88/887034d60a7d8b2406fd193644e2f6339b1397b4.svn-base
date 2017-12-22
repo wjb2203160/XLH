@@ -1,0 +1,44 @@
+package com.mtr.psn.service.pay;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import com.mtr.psn.mapper.pay.Salary_hMapper;
+import com.mtr.psn.model.pay.Salary_h;
+
+@Service
+public class Salary_hServiceImpl implements Salary_hService {
+
+	@Resource
+	private Salary_hMapper salary_hMapper;
+
+	@Override
+	public Salary_h selectById(Long id)throws Exception{
+		return	salary_hMapper.selectById(id);
+	}
+	@Override
+	public Salary_h selectBysiteId(Long id)throws Exception{
+		return	salary_hMapper.selectById(id);
+	}
+	@Override
+	public List<Salary_h> selectAll(Salary_h salary_h)throws Exception{
+		return	salary_hMapper.selectAll(salary_h);
+	}
+	@Override
+	public int psn_insert(Salary_h salary_h)throws Exception{
+		return	salary_hMapper.insert(salary_h);
+	}
+	@Override
+	public int psn_update(Salary_h salary_h)throws Exception{
+		return	salary_hMapper.update(salary_h);
+	}
+	@Override
+	public int psn_delete(Salary_h salary_h)throws Exception{
+		return	salary_hMapper.delete(salary_h);
+	}
+	@Override
+	public int Count(Salary_h salary_h)throws Exception{
+		return	salary_hMapper.Count(salary_h);
+	}
+}
